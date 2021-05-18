@@ -41,6 +41,20 @@ Route::group($groupData, function () {
         ->names('news.admin.categories');
 });
 
+// Редактирование новостей в админке
+$groupData = [
+    'namespace' => 'App\Http\Controllers\News\Admin',
+    'prefix' => 'admin/news',
+];
+
+Route::group($groupData, function () {
+    $methods = ['index', 'edit', 'store', 'create', 'update', 'destroy'];
+
+    Route::resource('posts', 'PostController')
+        ->only($methods)
+        ->names('news.admin.posts');
+});
+
 Route::get('/news', [PostController::class, 'index']);
 
 // d. Страница вывода конкретной новости.
