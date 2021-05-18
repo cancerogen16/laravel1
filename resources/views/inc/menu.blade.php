@@ -16,7 +16,7 @@
                     <a class="nav-link" href="{{ route('welcome') }}">Страница приветствия</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}">Рубрики</a>
+                    <a class="nav-link" href="{{ route('categories') }}">Рубрики</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('login') }}">Новости из рубрики</a>
