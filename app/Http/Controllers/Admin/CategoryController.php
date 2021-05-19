@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\News\Admin;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 
-class PostController extends BaseController
+class CategoryController extends AdminBaseController
 {
     /**
      * Display a listing of the resource.
@@ -13,13 +13,9 @@ class PostController extends BaseController
      */
     public function index()
     {
-        $items = [
-            ['id' => 1, 'title' => 'News 1'],
-            ['id' => 2, 'title' => 'News 2'],
-            ['id' => 3, 'title' => 'News 3'],
-        ];
+        $categories = $this->categories;
 
-        return view('news.admin.post.index', compact('items'));
+        return view('admin.categories.index', compact('categories'));
     }
 
     /**
@@ -29,7 +25,9 @@ class PostController extends BaseController
      */
     public function create()
     {
-        dd(__METHOD__);
+        $category = [];
+
+        return view('admin.categories.create', compact('category'));
     }
 
     /**

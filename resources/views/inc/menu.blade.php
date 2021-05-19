@@ -13,19 +13,19 @@
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('welcome') }}">Страница приветствия</a>
+                    <a class="nav-link" href="/news">Все новости</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('categories') }}">Рубрики</a>
+                    <a class="nav-link" href="/categories">Рубрики</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}">Новости из рубрики</a>
+                    <a class="nav-link" href="/admin/news">Управление новостями</a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/categories">Управление рубриками</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('login') }}">Авторизация</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}">Добавление новости</a>
                 </li>
             </ul>
         </div>

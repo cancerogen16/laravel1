@@ -1,61 +1,45 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Common\HomeController;
 
-use App\Http\Controllers\News\CategoryController;
-use App\Http\Controllers\News\PostController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\NewsController;
 
-
-// b. Страница категорий новостей.
-// c. Страница вывода новостей по конкретной категории.
-
-
-// f. Страница добавления новости.
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 
 // e. Страница авторизации.
 Auth::routes();
 
-// Главная страница
-Route::get('/', [HomeController::class, 'index'])->name('home');
-
 // a. Страница приветствия.
-Route::get('/welcome', function () {
+Route::get('/', function () {
     return view('common.welcome');
 })->name('welcome');
 
-// Категории новостей
-Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
-
-// Админка портала
-$groupData = [
-    'namespace' => 'App\Http\Controllers\News\Admin',
-    'prefix' => 'admin/news',
-];
-
-Route::group($groupData, function () {
-    $methods = ['index', 'edit', 'store', 'create', 'update', 'destroy'];
-
-    Route::resource('categories', 'CategoryController')
-        ->only($methods)
-        ->names('news.admin.categories');
-});
-
-// Редактирование новостей в админке
-$groupData = [
-    'namespace' => 'App\Http\Controllers\News\Admin',
-    'prefix' => 'admin/news',
-];
-
-Route::group($groupData, function () {
-    $methods = ['index', 'edit', 'store', 'create', 'update', 'destroy'];
-
-    Route::resource('posts', 'PostController')
-        ->only($methods)
-        ->names('news.admin.posts');
-});
-
-Route::get('/news', [PostController::class, 'index']);
+// Список новостей
+Route::get('/news', [NewsController::class, 'index'])
+    ->name('news.index');
 
 // d. Страница вывода конкретной новости.
-Route::get('/news/{id}', [PostController::class, 'show']);
+Route::get('/news/{id}', [NewsController::class, 'show'])
+    ->where('id', '\d+')
+    ->name('news.show');
+
+// b. Страница категорий новостей.
+Route::get('/categories', [CategoryController::class, 'index'])
+    ->name('categories');
+
+// c. Страница вывода новостей по конкретной категории.
+Route::get('/categories/{id}/news', [CategoryController::class, 'show'])
+    ->where('id', '\d+');
+
+
+/* Админка портала */
+Route::group(['prefix' => 'admin'], function () {
+    // Редактирование рубрик новостей в админке
+    Route::resource('categories', AdminCategoryController::class);
+
+    // Редактирование новостей в админке
+    // f. Страница добавления новости.
+    Route::resource('news', AdminNewsController::class);
+});
