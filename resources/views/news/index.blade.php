@@ -1,41 +1,43 @@
 @extends('layouts.app')
 
-@section('title', 'Список новостей')
+@section('title', 'Все новости')
 
 @section('content')
-<div class="container py-5">
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header"><h1>Вывод списка новостей</h1> </div>
+<section class="py-5 text-center container">
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light">Новости</h1>
+        </div>
+    </div>
+</section>
+<div class="album py-5 bg-light">
+    <div class="container">
 
-                <div class="card-body">
-                    <table class="table table-striped">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th>ID</th>
-                                <th>Название</th>
-                                <th>Рубрика</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($news as $post)
-                            <tr>
-                                <td>{{ $post['id'] }}</td>
-                                <td><a href="/news/{{ $post['id'] }}">{{ $post['title'] }}</a></td>
-                                <td>
-                                @if ($post['category_id'])
-                                <a href="news/category/{{ $post['category_id'] }}">{{ $post['category_name'] }}</a>
-                                @else
-                                    Нет рубрики
-                                @endif
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            @foreach($news as $post)
+            <div class="col">
+                <div class="card shadow-sm">
+                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
+                        xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: {{ $post['title'] }}"
+                        preserveAspectRatio="xMidYMid slice" focusable="false">
+                        <title>{{ $post['title'] }}</title>
+                        <rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef"
+                            dy=".3em">{{ $post['title'] }}</text>
+                    </svg>
+
+                    <div class="card-body">
+                        <p class="card-text">{{ $post['excerpt'] }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a href="/news/{{ $post['id'] }}" class="btn btn-sm btn-outline-secondary">View</a>
+                                <a href="/news/{{ $post['id'] }}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                            </div>
+                            <small class="text-muted">{{ $post['slug'] }}</small>
+                        </div>
+                    </div>
                 </div>
             </div>
+            @endforeach
         </div>
     </div>
 </div>
