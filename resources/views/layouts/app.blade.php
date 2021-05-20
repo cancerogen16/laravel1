@@ -18,11 +18,11 @@
 </head>
 <body>
     <div id="app">
-    @include('inc.header')
+    <x-header></x-header>
         <div class="content">
             @yield('content')
         </div>
-    @include('inc.footer')
+    <x-footer></x-footer>
     </div>
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>

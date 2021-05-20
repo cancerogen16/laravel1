@@ -1,3 +1,3 @@
 <header class="header">
-    @include('inc.menu')
+    <x-menu></x-menu>
 </header>

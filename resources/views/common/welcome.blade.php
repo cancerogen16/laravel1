@@ -4,7 +4,7 @@
 
 @section('content')
 
-@include('inc.slider')
+<x-slider></x-slider>
 
 <div class="container">
     <div class="row">
