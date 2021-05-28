@@ -54,7 +54,8 @@ class NewsController extends AdminBaseController
         ]);
 
         $fields = $request->all();
-        dd($fields);
+
+        return response()->json($fields);
     }
 
     /**
