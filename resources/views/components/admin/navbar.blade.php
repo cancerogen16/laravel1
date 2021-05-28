@@ -2,7 +2,7 @@
     <div class="position-sticky pt-3">
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link @if(request()->routeIs('index')) active @endif" aria-current="page" href="/admin/index">
+                <a class="nav-link @if(request()->routeIs('admin.index')) active @endif" aria-current="page" href="{{ route('admin.index') }}">
                     <span data-feather="home"></span>
                     Dashboard
                 </a>

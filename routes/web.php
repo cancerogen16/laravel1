@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Admin\MainController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\NewsController;
 
@@ -35,6 +36,10 @@ Route::get('/categories/{id}/news', [CategoryController::class, 'show'])
 
 
 /* Админка портала */
+// Панель администратора
+Route::get('/admin', [MainController::class, 'index'])
+    ->name('admin.index');
+
 Route::group(['prefix' => 'admin'], function () {
     // Редактирование рубрик новостей в админке
     Route::resource('categories', AdminCategoryController::class);
