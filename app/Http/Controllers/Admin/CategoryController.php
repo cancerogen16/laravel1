@@ -60,7 +60,18 @@ class CategoryController extends AdminBaseController
      */
     public function edit($id)
     {
-        dd(__METHOD__);
+        $categories = $this->categories;
+        $current_category = [];
+
+        foreach ($categories as $category) {
+            if ($category['category_id'] == $id) {
+                $current_category = $category;
+
+                break;
+            }
+        }
+
+        return view('admin.categories.edit', compact('current_category'));
     }
 
     /**

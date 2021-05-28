@@ -15,7 +15,7 @@ class NewsController extends AdminBaseController
     {
         $news = $this->news;
         $categories = $this->categories;
-        
+
         foreach ($news as &$post) {
             if (!empty($post['category_id'])) {
                 foreach ($categories as $category) {
@@ -49,7 +49,12 @@ class NewsController extends AdminBaseController
      */
     public function store(Request $request)
     {
-        dd(__METHOD__);
+        $request->validate([
+            'title' => ['required']
+        ]);
+
+        $fields = $request->all();
+        dd($fields);
     }
 
     /**
@@ -74,7 +79,7 @@ class NewsController extends AdminBaseController
         $news = $this->news;
         $categories = $this->categories;
         $current_post = [];
-        
+
         foreach ($news as &$post) {
             if (!empty($post['category_id'])) {
                 foreach ($categories as $category) {

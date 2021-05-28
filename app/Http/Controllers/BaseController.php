@@ -21,6 +21,7 @@ abstract class BaseController extends Controller
             'category_id' => 0,
             'title' => $cName,
             'slug' => Str::of($cName)->slug(),
+            'description' => 'Описание категории',
             'parent_id' => 0,
         ];
 
@@ -32,6 +33,7 @@ abstract class BaseController extends Controller
                 'category_id' => $i,
                 'title' => $cName,
                 'slug' => Str::of($cName)->slug(),
+                'description' => 'Описание категории',
                 'parent_id' => $parentId,
             ];
         }
@@ -55,8 +57,7 @@ abstract class BaseController extends Controller
                 'title' => $title,
                 'slug' => Str::of($title)->slug(),
                 'excerpt' => 'Отрывок',
-                'content_raw' => $txt,
-                'content_html' => $txt,
+                'description' => $txt,
                 'is_published' => $isPublished,
                 'published_at' => $isPublished ? $publishedAt : null,
                 'created_at' => $createdAt,
