@@ -11,10 +11,10 @@
                 <h4 class="text-white">Меню сайта</h4>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/news">Все новости</a>
+                        <a class="nav-link" href="{{ route('news') }}">Все новости</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/categories">Рубрики</a>
+                        <a class="nav-link" href="{{ route('categories') }}">Категории</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/admin/news">Управление новостями</a>

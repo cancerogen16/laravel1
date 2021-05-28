@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 // Список новостей
 Route::get('/news', [NewsController::class, 'index'])
-    ->name('news.index');
+    ->name('news');
 
 // d. Страница вывода конкретной новости.
 Route::get('/news/{id}', [NewsController::class, 'show'])
