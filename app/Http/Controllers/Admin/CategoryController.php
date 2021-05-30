@@ -38,7 +38,13 @@ class CategoryController extends AdminBaseController
      */
     public function store(Request $request)
     {
-        dd(__METHOD__);
+        $request->validate([
+            'title' => ['required']
+        ]);
+
+        $fields = $request->all();
+
+        return response()->json($fields);
     }
 
     /**
