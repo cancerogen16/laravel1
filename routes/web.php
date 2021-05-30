@@ -1,10 +1,13 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\MainController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\NewsController;
+
+use App\Http\Controllers\FeedbackController;
 
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
@@ -16,6 +19,12 @@ Auth::routes();
 Route::get('/', function () {
     return view('common.welcome');
 })->name('welcome');
+
+// Страница обратной связи
+Route::get('/feedback', [FeedbackController::class, 'index'])
+    ->name('feedback');
+Route::post('/feedback/store', [FeedbackController::class, 'store'])
+    ->name('feedback.store');
 
 // Список новостей
 Route::get('/news', [NewsController::class, 'index'])

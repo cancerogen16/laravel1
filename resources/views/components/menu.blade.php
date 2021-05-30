@@ -17,7 +17,7 @@
                         <a class="nav-link" href="{{ route('categories') }}">Категории</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin/news">Управление новостями</a>
+                        <a class="nav-link" href="{{ route('feedback') }}">Обратная связь</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/admin/categories">Управление рубриками</a>
