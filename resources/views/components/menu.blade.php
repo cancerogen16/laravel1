@@ -20,7 +20,7 @@
                         <a class="nav-link" href="{{ route('feedback') }}">Обратная связь</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin/categories">Управление рубриками</a>
+                        <a class="nav-link" href="{{ route('order') }}">Заказ выгрузки данных</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">Авторизация</a>
