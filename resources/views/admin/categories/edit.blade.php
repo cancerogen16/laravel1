@@ -15,15 +15,15 @@
                 @csrf
                 <div class="form-group">
                     <label for="title" class="form-label">Заголовок</label>
-                    <input type="text" class="form-control" id="title" name="title" placeholder="Заголовок" value="{{ $current_category['title'] }}">
+                    <input type="text" class="form-control" id="title" name="title" placeholder="Заголовок" value="{{ $categoryInfo->title }}">
                 </div>
                 <div class="form-group">
                     <label for="slug" class="form-label">Ярлык</label>
-                    <input type="text" class="form-control" id="slug" name="slug" placeholder="Ярлык" value="{{ $current_category['slug'] }}">
+                    <input type="text" class="form-control" id="slug" name="slug" placeholder="Ярлык" value="{{ $categoryInfo->slug }}">
                 </div>
                 <div class="form-group">
                     <label for="description">Описание</label>
-                    <textarea name="description" class="form-control" id="description" cols="30" rows="10" placeholder="Описание">{{ $current_category['description'] }}</textarea>
+                    <textarea name="description" class="form-control" id="description" cols="30" rows="10" placeholder="Описание">{{ $categoryInfo->description }}</textarea>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-outline-success">Сохранить</button>

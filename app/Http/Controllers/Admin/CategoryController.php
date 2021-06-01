@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Admin\Category;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 class CategoryController extends AdminBaseController
@@ -13,7 +15,7 @@ class CategoryController extends AdminBaseController
      */
     public function index()
     {
-        $categories = $this->categories;
+        $categories = Category::all();
 
         return view('admin.categories.index', compact('categories'));
     }
@@ -66,18 +68,11 @@ class CategoryController extends AdminBaseController
      */
     public function edit($id)
     {
-        $categories = $this->categories;
-        $current_category = [];
+        $model = new Category();
 
-        foreach ($categories as $category) {
-            if ($category['category_id'] == $id) {
-                $current_category = $category;
+        $categoryInfo = $model->getCategoryInfo($id);
 
-                break;
-            }
-        }
-
-        return view('admin.categories.edit', compact('current_category'));
+        return view('admin.categories.edit', compact('categoryInfo'));
     }
 
     /**

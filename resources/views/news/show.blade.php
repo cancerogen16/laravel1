@@ -17,7 +17,7 @@
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <small class="text-muted">{{ $current_post['slug'] }}</small>
-                            <p class="card-text">{{ $current_post['content_html'] }}</p>
+                            <p class="card-text">{{ $current_post['description'] }}</p>
                         </div>
                     </div>
                 </div>

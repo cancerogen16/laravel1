@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header"><h1>Вывод новостей из рубрики #{{ $id }}</h1> </div>
+                <div class="card-header"><h1>{{ $title }}</h1> </div>
 
                 <div class="card-body">
                     <table class="table table-striped">
@@ -18,12 +18,19 @@
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach($category_posts as $post)
+                        @if(!$category_news->isEmpty())
+                        @foreach($category_news as $post)
                             <tr>
                                 <td>{{ $post['id'] }}</td>
                                 <td><a href="/news/{{ $post['id'] }}">{{ $post['title'] }}</a></td>
                             </tr>
                         @endforeach
+                        @else
+                            <tr>
+                                <td></td>
+                                <td>Нет новостей в категории</td>
+                            </tr>
+                        @endif
                         </tbody>
                     </table>
                 </div>

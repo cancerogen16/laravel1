@@ -27,7 +27,7 @@
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <a href="/categories/{{ $category['category_id'] }}/news" class="btn btn-sm btn-outline-secondary">Новости из категории</a>
+                                        <a href="/categories/{{ $category['id'] }}/news" class="btn btn-sm btn-outline-secondary">Новости из категории</a>
                                     </div>
                                 </div>
                             </div>

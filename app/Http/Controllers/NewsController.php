@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\News;
 use Illuminate\Http\Request;
 
 class NewsController extends BaseController
@@ -13,18 +14,7 @@ class NewsController extends BaseController
      */
     public function index()
     {
-        $news = $this->news;
-        $categories = $this->categories;
-        
-        foreach ($news as &$post) {
-            if (!empty($post['category_id'])) {
-                foreach ($categories as $category) {
-                    if ($post['category_id'] == $category['category_id']) {
-                        $post['category_name'] = $category['title'];
-                    }
-                }
-            }
-        }
+        $news = News::all();
 
         return view('news.index', compact('news'));
     }
@@ -37,14 +27,8 @@ class NewsController extends BaseController
      */
     public function show($id)
     {
-        $news = $this->news;
-        $current_post = [];
-        
-        foreach ($news as $post) {
-            if ($post['id'] == $id) {
-                $current_post = $post;
-            }
-        }
+
+        $current_post = News::findOrFail($id);
 
         return view('news.show', compact('current_post'));
     }

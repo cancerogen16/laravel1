@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Admin\News;
+use App\Models\Admin\Category;
 use Illuminate\Http\Request;
 
 class NewsController extends AdminBaseController
@@ -13,18 +15,9 @@ class NewsController extends AdminBaseController
      */
     public function index()
     {
-        $news = $this->news;
-        $categories = $this->categories;
+        $model = new News();
 
-        foreach ($news as &$post) {
-            if (!empty($post['category_id'])) {
-                foreach ($categories as $category) {
-                    if ($post['category_id'] == $category['category_id']) {
-                        $post['category_name'] = $category['title'];
-                    }
-                }
-            }
-        }
+        $news = $model->getNewsList();
 
         return view('admin.news.index', compact('news'));
     }
@@ -36,7 +29,7 @@ class NewsController extends AdminBaseController
      */
     public function create()
     {
-        $categories = $this->categories;
+        $categories = Category::all();
 
         return view('admin.news.create', compact('categories'));
     }
@@ -77,27 +70,13 @@ class NewsController extends AdminBaseController
      */
     public function edit($id)
     {
-        $news = $this->news;
-        $categories = $this->categories;
-        $current_post = [];
+        $categories = Category::all();
 
-        foreach ($news as &$post) {
-            if (!empty($post['category_id'])) {
-                foreach ($categories as $category) {
-                    if ($post['category_id'] == $category['category_id']) {
-                        $post['category_name'] = $category['title'];
-                    }
-                }
-            }
+        $model = new News();
 
-            if ($post['id'] == $id) {
-                $current_post = $post;
-
-                break;
-            }
-        }
-
-        return view('admin.news.edit', compact('categories', 'id', 'current_post'));
+        $newsInfo = $model->getNewsInfo($id);
+;
+        return view('admin.news.edit', compact('newsInfo', 'categories'));
     }
 
     /**

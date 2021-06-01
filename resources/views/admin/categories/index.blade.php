@@ -26,8 +26,8 @@
             @foreach($categories as $category)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $category['category_id'] }}</td>
-                    <td><a href="/admin/categories/{{ $category['category_id'] }}/edit">{{ $category['title'] }}</a></td>
+                    <td>{{ $category->id }}</td>
+                    <td><a href="{{ route('categories.edit', $category->id) }}">{{ $category['title'] }}</a></td>
                     <td>{{ $category['slug'] }}</td>
                 </tr>
             @endforeach

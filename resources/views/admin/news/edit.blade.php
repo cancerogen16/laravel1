@@ -15,11 +15,11 @@
                 @csrf
                 <div class="form-group">
                     <label for="title" class="form-label">Заголовок</label>
-                    <input type="text" class="form-control" id="title" name="title" placeholder="Заголовок" value="{{ $current_post['title'] }}">
+                    <input type="text" class="form-control" id="title" name="title" placeholder="Заголовок" value="{{ $newsInfo->title }}">
                 </div>
                 <div class="form-group">
                     <label for="slug" class="form-label">Ярлык</label>
-                    <input type="text" class="form-control" id="slug" name="slug" placeholder="Ярлык" value="{{ $current_post['slug'] }}">
+                    <input type="text" class="form-control" id="slug" name="slug" placeholder="Ярлык" value="{{ $newsInfo->slug }}">
                 </div>
                 <div class="form-group">
                     <label for="image" class="form-label">Логотип</label>
@@ -29,21 +29,21 @@
                     <label for="category_id">Категория</label>
                     <select class="form-select" id="category_id" name="category_id">
                         @foreach($categories as $category)
-                            <option value="{{ $category['category_id'] }}"
-                                    @if ($category['category_id'] == $current_post['category_id'])
+                            <option value="{{ $category->id }}"
+                                    @if ($category->id == $newsInfo->category_id)
                                     selected="selected"
                                 @endif
-                            >{{ $category['title'] }}</option>
+                            >{{ $category->title }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="excerpt">Отрывок</label>
-                    <textarea name="excerpt" class="form-control" id="excerpt" cols="30" rows="3" placeholder="Отрывок">{{ $current_post['excerpt'] }}</textarea>
+                    <textarea name="excerpt" class="form-control" id="excerpt" cols="30" rows="3" placeholder="Отрывок">{{ $newsInfo->excerpt }}</textarea>
                 </div>
                 <div class="form-group">
                     <label for="description">Описание</label>
-                    <textarea name="description" class="form-control" id="description" cols="30" rows="10" placeholder="Описание">{{ $current_post['description'] }}</textarea>
+                    <textarea name="description" class="form-control" id="description" cols="30" rows="10" placeholder="Описание">{{ $newsInfo->description }}</textarea>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-outline-success">Сохранить</button>

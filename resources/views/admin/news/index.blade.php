@@ -18,20 +18,20 @@
                 <th>#</th>
                 <th>ID</th>
                 <th>Название</th>
-                <th>ID рубрики</th>
+                <th>Категория</th>
             </tr>
             </thead>
             <tbody>
             @foreach($news as $post)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $post['id'] }}</td>
-                    <td><a href="/admin/news/{{ $post['id'] }}/edit">{{ $post['title'] }}</a></td>
+                    <td>{{ $post->id }}</td>
+                    <td><a href="{{ route('news.edit', $post->id) }}">{{ $post->title }}</a></td>
                     <td>
-                        @if ($post['category_id'])
-                            <a href="/admin/categories/{{ $post['category_id'] }}/edit">{{ $post['category_name'] }}</a>
+                        @if ($post->category_id)
+                            <a href="{{ route('categories.edit', $post->category_id) }}">{{ $post->category_name }}</a>
                         @else
-                            Нет рубрики
+                            Нет категории
                         @endif
                     </td>
                 </tr>
