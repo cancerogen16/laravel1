@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Faker\Factory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -18,28 +19,27 @@ class NewsSeeder extends Seeder
         $maxCategory = 5;
         $maxNews = 10;
 
-        $startDate = time();
-
         $news = [];
+
+        $faker = Factory::create('ru_RU');
 
         for ($c = 1; $c <= $maxCategory; $c++) {
             for ($n = 1; $n <= $maxNews; $n++) {
                 $categoryId = 1 + rand(1, $maxCategory - 1);
 
-                $title = 'Новость #' . $c . $n;
-                $txt = 'Текст новости ' . $c . $n;
+                $title = $faker->sentence(rand(3, 8), true);
+                $txt = $faker->realText(rand(100, 200));
+                $excerpt = $faker->realText(rand(10, 30));
                 $isPublished = rand(0, 1);
 
-                $date = rand(1, 30);
-
-                $createdAt = date('Y-m-d H:i:s', strtotime('-'.($date+1).' day', $startDate));
+                $createdAt = $faker->dateTimeBetween('-3 months', '-2 months');
 
                 $news[] = [
                     'category_id' => $categoryId,
                     'user_id' => (rand(1, 5) == 5) ? 1 : 2,
                     'title' => $title,
                     'slug' => Str::of($title)->slug(),
-                    'excerpt' => 'Отрывок',
+                    'excerpt' => $excerpt,
                     'description' => $txt,
                     'is_published' => $isPublished,
                     'published_at' => $isPublished ? $createdAt : null,

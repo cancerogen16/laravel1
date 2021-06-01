@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use Faker\Factory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class SourcesSeeder extends Seeder
 {
@@ -17,14 +17,17 @@ class SourcesSeeder extends Seeder
     {
         $sources = [];
 
+        $faker = Factory::create('ru_RU');
+        $fakerEn = Factory::create('en_GB');
+
         for ($i = 1; $i <= 10; $i++) {
-            $sourceName = 'Источник #' . $i;
+            $createdAt = $faker->dateTimeBetween('-2 months', '-2 days');
 
             $sources[] = [
-                'url' => Str::of($sourceName)->slug() . '.ru',
-                'description' => $sourceName,
-                'created_at' => date("Y-m-d H:i:s"),
-                'updated_at' => date("Y-m-d H:i:s")
+                'url' => $fakerEn->domainName,
+                'description' => $faker->realText(rand(50, 200)),
+                'created_at' => $createdAt,
+                'updated_at' => $createdAt
             ];
         }
 
