@@ -14,23 +14,19 @@ class News extends Model
 
     public function getNewsList()
     {
-        $news = DB::table('news')
+        return DB::table('news')
             ->leftJoin('categories', 'news.category_id', '=', 'categories.id')
             ->select('news.*', 'categories.title as category_name')
             ->orderByDesc('id')
             ->get();
-
-        return $news;
     }
 
     public function getNewsInfo(int $id)
     {
-        $newsInfo = DB::table('news')
+        return DB::table('news')
             ->leftJoin('categories', 'news.category_id', '=', 'categories.id')
             ->select('news.*', 'categories.title as category_name')
             ->where('news.id', '=', $id)
             ->first();
-
-        return $newsInfo;
     }
 }
