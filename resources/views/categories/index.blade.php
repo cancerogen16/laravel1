@@ -16,18 +16,28 @@
                 @foreach($categories as $category)
                     <div class="col">
                         <div class="card shadow-sm">
-                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                                 xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: {{ $category['title'] }}"
-                                 preserveAspectRatio="xMidYMid slice" focusable="false">
-                                <title>{{ $category['title'] }}</title>
-                                <rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef"
-                                                                                             dy=".3em">{{ $category['title'] }}</text>
-                            </svg>
+                            <div class="card-img-top">
+                                <div class="card-img">
+                                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
+                                         xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                        <defs>
+                                            <path id="path1" d="M10,30 H190 M10,60 H190 M10,90 H190 M10,120 H190"></path>
+                                        </defs>
+                                        <use xlink:href="#path1" x="25%" y="35" stroke="blue" stroke-width="1" />
+                                        <rect width="100%" height="100%" fill="#55595c"/>
+                                    </svg>
+                                </div>
+                                <div class="card-title-wrap">
+                                    <div class="card-title">
+                                        {{ $category->title }}
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <a href="/categories/{{ $category['id'] }}/news" class="btn btn-sm btn-outline-secondary">Новости из категории</a>
+                                        <a href="/categories/{{ $category->id }}/news" class="btn btn-sm btn-outline-secondary">Новости из категории</a>
                                     </div>
                                 </div>
                             </div>

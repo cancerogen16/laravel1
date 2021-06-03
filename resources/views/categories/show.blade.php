@@ -15,20 +15,23 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Название</th>
+                                <th>Дата</th>
                             </tr>
                         </thead>
                         <tbody>
-                        @if(!$category_news->isEmpty())
+                        @if($category_news)
                         @foreach($category_news as $post)
                             <tr>
-                                <td>{{ $post['id'] }}</td>
-                                <td><a href="/news/{{ $post['id'] }}">{{ $post['title'] }}</a></td>
+                                <td>{{ $post->id }}</td>
+                                <td><a href="/news/{{ $post->id }}">{{ $post->title }}</a></td>
+                                <td>{{ $post->created_at }}</td>
                             </tr>
                         @endforeach
                         @else
                             <tr>
                                 <td></td>
                                 <td>Нет новостей в категории</td>
+                                <td></td>
                             </tr>
                         @endif
                         </tbody>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\News;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 class CategoryController extends BaseController
@@ -15,8 +16,9 @@ class CategoryController extends BaseController
      */
     public function index()
     {
+        $categoryModel = new Category();
 
-        $categories = Category::all();
+        $categories = $categoryModel->getCategoriesList();
 
         return view('categories.index', compact('categories'));
     }
@@ -29,15 +31,16 @@ class CategoryController extends BaseController
      */
     public function show($id)
     {
-        $category_news = [];
         $title = 'Новости из категории';
+
+        $categoryModel = new Category();
+
+        $category_news = $categoryModel->getCategoryNews($id);
 
         $category = Category::find($id);
 
         if ($category !== null) {
             $title = 'Новости из категории ' . $category->title;
-
-            $category_news = News::where('category_id', $id)->get();
         }
 
         return view('categories.show', compact('title', 'category_news', 'id'));
