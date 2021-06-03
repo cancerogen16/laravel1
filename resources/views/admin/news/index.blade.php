@@ -1,0 +1,44 @@
+@extends('layouts.admin')
+
+@section('title')Список новостей - @parent @stop
+
+@section('content')
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Список новостей</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2">
+                <a class="btn btn-primary" href="{{ route('news.create') }}" role="button">Добавить новость</a>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>ID</th>
+                <th>Название</th>
+                <th>Категория</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($news as $post)
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $post->id }}</td>
+                    <td><a href="{{ route('news.edit', $post->id) }}">{{ $post->title }}</a></td>
+                    <td>
+                        @if ($post->category_id)
+                            <a href="{{ route('categories.edit', $post->category_id) }}">{{ $post->category_name }}</a>
+                        @else
+                            Нет категории
+                        @endif
+                    </td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+    </div>
+@endsection
+
+
