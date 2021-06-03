@@ -7,10 +7,11 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\NewsController;
 
 use App\Http\Controllers\FeedbackController;
-use App\Http\Controllers\OrderController;
+use App\Http\Controllers\SourceController;
 
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use App\Http\Controllers\Admin\SourceController as AdminSourceController;
 
 // e. Страница авторизации.
 Auth::routes();
@@ -27,10 +28,11 @@ Route::post('/feedback/store', [FeedbackController::class, 'store'])
     ->name('feedback.store');
 
 // Форма заказа на получение выгрузки данных из какого-либо источника
-Route::get('/order', [OrderController::class, 'index'])
-    ->name('order');
-Route::post('/order/store', [OrderController::class, 'store'])
-    ->name('order.store');
+Route::get('/source/input', [SourceController::class, 'input'])
+    ->name('source.input');
+// Сохранение источника в базу
+Route::post('/source/store', [SourceController::class, 'store'])
+    ->name('source.store');
 
 // Список новостей
 Route::get('/news', [NewsController::class, 'index'])
@@ -62,4 +64,7 @@ Route::group(['prefix' => 'admin'], function () {
     // Редактирование новостей в админке
     // f. Страница добавления новости.
     Route::resource('news', AdminNewsController::class);
+
+    // Редактирование источников данных
+    Route::resource('sources', AdminSourceController::class);
 });

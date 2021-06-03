@@ -16,8 +16,8 @@
                     <span data-feather="edit"></span>Новости</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="shopping-cart"></span>Products</a>
+                <a class="nav-link @if(request()->routeIs('sources.*')) active @endif" href="{{ route('sources.index') }}">
+                    <span data-feather="shopping-cart"></span>Источники данных</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">

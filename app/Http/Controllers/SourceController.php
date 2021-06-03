@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Source;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class OrderController extends BaseController
+class SourceController extends BaseController
 {
-    public function index()
+    public function input()
     {
-        return view('common.order');
+        return view('source.input');
     }
 
     /**
@@ -30,16 +32,16 @@ class OrderController extends BaseController
 
         $data = $request->only(['name', 'phone', 'email', 'info']);
 
-        $this->saveOrder($data);
+        $this->saveSource($data);
 
-        return redirect()->route('order')
+        return redirect()->route('source.input')
             ->with('success', 'Ваше сообщение успешно отправлено.');
     }
 
     /**
      * @throws FileNotFoundException
      */
-    public function saveOrder($data)
+    public function saveSource($data)
     {
         $filename = 'orders.txt';
 

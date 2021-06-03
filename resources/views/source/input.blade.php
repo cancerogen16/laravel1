@@ -36,7 +36,7 @@
                 </div>
             @endif
 
-            <form class="row g-3 col-lg-6 col-md-8 mx-auto" method="post" action="{{ route('order.store') }}">
+            <form class="row g-3 col-lg-6 col-md-8 mx-auto" method="post" action="{{ route('source.store') }}">
                 @csrf
                 <div class="form-group">
                     <label for="name" class="form-label">Имя</label>
