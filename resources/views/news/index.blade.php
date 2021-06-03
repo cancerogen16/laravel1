@@ -44,6 +44,7 @@
                             <div class="btn-group">
                                 <a href="/news/{{ $post->id }}" class="btn btn-sm btn-outline-secondary">Подробнее</a>
                             </div>
+                            <small class="text-muted">{{ $post->created_at }}</small>
                         </div>
                     </div>
                 </div>

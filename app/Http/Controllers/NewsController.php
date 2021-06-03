@@ -14,7 +14,9 @@ class NewsController extends BaseController
      */
     public function index()
     {
-        $news = News::all();
+        $newsModel = new News();
+
+        $news = $newsModel->newsList();
 
         return view('news.index', compact('news'));
     }
@@ -27,8 +29,9 @@ class NewsController extends BaseController
      */
     public function show($id)
     {
+        $newsModel = new News();
 
-        $current_post = News::findOrFail($id);
+        $current_post = $newsModel->newsOne($id);
 
         return view('news.show', compact('current_post'));
     }
