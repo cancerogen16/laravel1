@@ -15,24 +15,17 @@ class CreateNewsTable extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->id();
-
-            $table->unsignedBigInteger('category_id');
-            $table->unsignedBigInteger('user_id');
-
-            $table->string('title');
-            $table->string('slug')->unique();
-            $table->string('image')->nullable();
+            $table->foreignId('category_id')
+                ->constrained('categories')
+                ->cascadeOnDelete();
+            $table->string('title', 191);
+            $table->string('image', 255)->nullable();
 
             $table->text('excerpt')->nullable();
             $table->text('description')->nullable();
 
-            $table->boolean('is_published')->default(false);
-            $table->timestamp('published_at')->nullable();
-
             $table->timestamps();
             $table->softDeletes();
-
-            $table->index('is_published');
         });
     }
 
