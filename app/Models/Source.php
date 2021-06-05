@@ -10,5 +10,11 @@ use Illuminate\Support\Facades\DB;
 class Source extends Model
 {
     use HasFactory;
-    use SoftDeletes;
+
+    protected $table = "sources";
+
+    protected $fillable = [
+        'url',
+        'description',
+    ];
 }

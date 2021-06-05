@@ -13,7 +13,7 @@ class SourceController extends BaseController
 {
     public function input()
     {
-        return view('source.input');
+        return view('sources.input');
     }
 
     /**
@@ -34,7 +34,7 @@ class SourceController extends BaseController
 
         $this->saveSource($data);
 
-        return redirect()->route('source.input')
+        return redirect()->route('sources.input')
             ->with('success', 'Ваше сообщение успешно отправлено.');
     }
 
