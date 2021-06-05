@@ -10,10 +10,8 @@ use Illuminate\Support\Facades\DB;
 class Category extends Model
 {
     use HasFactory;
-    use SoftDeletes;
 
     protected $fillable = [
-        'parent_id',
         'title',
         'slug',
         'description',
