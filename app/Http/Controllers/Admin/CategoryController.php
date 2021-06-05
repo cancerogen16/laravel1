@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Admin\Category;
+use App\Http\Requests\CategoryCreateRequest;
+use App\Http\Requests\CategoryUpdateRequest;
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class CategoryController extends AdminBaseController
 {
@@ -15,9 +18,11 @@ class CategoryController extends AdminBaseController
      */
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::paginate(5);
 
-        return view('admin.categories.index', compact('categories'));
+        return view('admin.categories.index',[
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -27,26 +32,32 @@ class CategoryController extends AdminBaseController
      */
     public function create()
     {
-        $category = [];
+        $category = new Category();
 
         return view('admin.categories.create', compact('category'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(CategoryCreateRequest $request)
     {
-        $request->validate([
-            'title' => ['required']
-        ]);
+        $data = $request->input();
 
-        $fields = $request->all();
+        if (empty($data['slug'])) {
+            $data['slug'] = Str::slug($data['title']);
+        }
 
-        return response()->json($fields);
+        $category = new Category($data);
+
+        $category->save();
+
+        if ($category) {
+            return redirect()
+                ->route('categories.edit', [$category->id])
+                ->with(['success' => 'Успешно сохранено!']);
+        } else {
+            return back()
+                ->withErrors(['msg' => 'Ошибка сохранения!'])
+                ->withInput();
+        }
     }
 
     /**
@@ -68,11 +79,9 @@ class CategoryController extends AdminBaseController
      */
     public function edit($id)
     {
-        $model = new Category();
+        $category = Category::findOrFail($id);
 
-        $categoryInfo = $model->getCategoryInfo($id);
-
-        return view('admin.categories.edit', compact('categoryInfo'));
+        return view('admin.categories.edit', compact('category'));
     }
 
     /**
@@ -82,9 +91,33 @@ class CategoryController extends AdminBaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryUpdateRequest $request, $id)
     {
-        dd(__METHOD__);
+        $category = Category::find($id);
+
+        if (empty($category)) {
+            return back()
+                ->withErrors(['msg' => "Категория id=[{$id}] не найдена"])
+                ->withInput();
+        }
+
+        $data = $request->input();
+
+        if (empty($data['slug'])) {
+            $data['slug'] = Str::slug($data['title']);
+        }
+
+        $result = $category->update($data);
+
+        if ($result) {
+            return redirect()
+                ->route('categories.edit', $category->id)
+                ->with(['success' => 'Успешно сохранено!']);
+        } else {
+            return back()
+                ->withErrors(['msg' => 'Ошибка сохранения!'])
+                ->withInput();
+        }
     }
 
     /**
@@ -95,6 +128,15 @@ class CategoryController extends AdminBaseController
      */
     public function destroy($id)
     {
-        dd(__METHOD__);
+        $result = Category::destroy($id);
+
+        if ($result) {
+            return redirect()
+                ->route('admin.index')
+                ->with(['success' => "Категория [$id] удалена"]);
+        } else {
+            return back()
+                ->withErrors(['msg' => "Ошибка удаления"]);
+        }
     }
 }

@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Admin\News;
-use App\Models\Admin\Category;
+use App\Http\Requests\CategoryCreateRequest;
+use App\Http\Requests\NewsCreateRequest;
+use App\Http\Requests\NewsUpdateRequest;
+use App\Models\News;
+use App\Models\Category;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class NewsController extends AdminBaseController
 {
@@ -15,11 +20,13 @@ class NewsController extends AdminBaseController
      */
     public function index()
     {
-        $model = new News();
+        $news = News::with('category')
+            ->orderBy('id', 'desc')
+            ->paginate(10);
 
-        $news = $model->getNewsList();
-
-        return view('admin.news.index', compact('news'));
+        return view('admin.news.index', [
+            'newsList' => $news
+        ]);
     }
 
     /**
@@ -31,24 +38,32 @@ class NewsController extends AdminBaseController
     {
         $categories = Category::all();
 
-        return view('admin.news.create', compact('categories'));
+        $news = new News();
+
+        return view('admin.news.create', compact('news', 'categories'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(NewsCreateRequest $request)
     {
-        $request->validate([
-            'title' => ['required']
-        ]);
+        $data = $request->input();
 
-        $fields = $request->all();
+        if (empty($data['slug'])) {
+            $data['slug'] = Str::slug($data['title']);
+        }
 
-        return response()->json($fields);
+        $newsInfo = new News($data);
+
+        $newsInfo->save();
+
+        if ($newsInfo) {
+            return redirect()
+                ->route('news.edit', [$newsInfo->id])
+                ->with(['success' => 'Успешно сохранено!']);
+        } else {
+            return back()
+                ->withErrors(['msg' => 'Ошибка сохранения!'])
+                ->withInput();
+        }
     }
 
     /**
@@ -72,10 +87,8 @@ class NewsController extends AdminBaseController
     {
         $categories = Category::all();
 
-        $model = new News();
+        $newsInfo = News::findOrFail($id);
 
-        $newsInfo = $model->getNewsInfo($id);
-;
         return view('admin.news.edit', compact('newsInfo', 'categories'));
     }
 
@@ -86,9 +99,33 @@ class NewsController extends AdminBaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(NewsUpdateRequest $request, $id)
     {
-        dd(__METHOD__);
+        $news = News::find($id);
+
+        if (empty($news)) {
+            return back()
+                ->withErrors(['msg' => "Запись id=[{$id}] не найдена"])
+                ->withInput();
+        }
+
+        $data = $request->input();
+
+        if (empty($data['slug'])) {
+            $data['slug'] = Str::slug($data['title']);
+        }
+
+        $result = $news->update($data);
+
+        if ($result) {
+            return redirect()
+                ->route('news.edit', $news->id)
+                ->with(['success' => 'Успешно сохранено!']);
+        } else {
+            return back()
+                ->withErrors(['msg' => 'Ошибка сохранения!'])
+                ->withInput();
+        }
     }
 
     /**

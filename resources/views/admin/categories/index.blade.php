@@ -13,26 +13,33 @@
     </div>
 
     <div class="table-responsive">
-        <table class="table table-striped table-sm">
+        <table class="table table-striped table-sm table-bordered">
             <thead>
             <tr>
-                <th>#</th>
-                <th>ID</th>
-                <th>Название</th>
-                <th>Ярлык</th>
+                <th>#ID</th>
+                <th>Заголовок</th>
+                <th>Дата добавления</th>
+                <th>Действия</th>
             </tr>
             </thead>
             <tbody>
-            @foreach($categories as $category)
+            @forelse($categories as $category)
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
                     <td>{{ $category->id }}</td>
-                    <td><a href="{{ route('categories.edit', $category->id) }}">{{ $category['title'] }}</a></td>
-                    <td>{{ $category['slug'] }}</td>
+                    <td>{{ $category->title }}</td>
+                    <td>{{ $category->created_at }}</td>
+                    <td><a href="{{ route('categories.edit', ['category' => $category]) }}">Ред.</a>&nbsp;||&nbsp;
+                        <a href="javascript:;" class="delete">Уд.</a>
+                    </td>
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td colspan="4"><h3>Записей нет</h3></td>
+                </tr>
+            @endforelse
             </tbody>
         </table>
+        <div>{{ $categories->links() }}</div>
     </div>
 @endsection
 

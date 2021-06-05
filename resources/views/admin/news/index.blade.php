@@ -12,32 +12,37 @@
         </div>
     </div>
     <div class="table-responsive">
-        <table class="table table-striped table-sm">
+        <table class="table table-striped table-sm table-bordered">
             <thead>
             <tr>
-                <th>#</th>
-                <th>ID</th>
-                <th>Название</th>
+                <th>#ID</th>
                 <th>Категория</th>
+                <th>Заголовок</th>
+                <th>Статус</th>
+                <th>Дата добавления</th>
+                <th>Действия</th>
             </tr>
             </thead>
             <tbody>
-            @foreach($news as $post)
+            @forelse($newsList as $news)
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $post->id }}</td>
-                    <td><a href="{{ route('news.edit', $post->id) }}">{{ $post->title }}</a></td>
-                    <td>
-                        @if ($post->category_id)
-                            <a href="{{ route('categories.edit', $post->category_id) }}">{{ $post->category_name }}</a>
-                        @else
-                            Нет категории
-                        @endif
+                    <td>{{ $news->id }}</td>
+                    <td>{{ $news->category->title }}</td>
+                    <td>{{ $news->title }}</td>
+                    <td>{{ $news->status }}</td>
+                    <td>{{ $news->created_at->format('d-m-Y H:i') }}</td>
+                    <td><a href="{{ route('news.edit', ['news' => $news]) }}">Ред.</a>&nbsp;||&nbsp;
+                        <a href="javascript:;" class="delete">Уд.</a>
                     </td>
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td colspan="4"><h3>Записей нет</h3></td>
+                </tr>
+            @endforelse
             </tbody>
         </table>
+        <div>{{ $newsList->links() }}</div>
     </div>
 @endsection
 

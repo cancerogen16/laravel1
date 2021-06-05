@@ -5,13 +5,26 @@
 @section('content')
     <div class="col-md-8 pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Редактировать новость</h1>
+
         @if($errors->any())
             @foreach($errors->all() as $error)
-                <div class="alert alert-danger">{{ $error }}</div>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ $error }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
             @endforeach
         @endif
+
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session()->get('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
         <div class="mb-2">
-            <form class="row g-3" method="post" action="{{ route('news.store') }}">
+            <form class="row g-3" method="post" action="{{ route('news.update', $newsInfo->id) }}">
+                @method('PATCH')
                 @csrf
                 <div class="form-group">
                     <label for="title" class="form-label">Заголовок</label>
