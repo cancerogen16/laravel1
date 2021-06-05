@@ -16,30 +16,24 @@ class CategoriesSeeder extends Seeder
      */
     public function run()
     {
-        $maxCategory = 5;
+        $maxCategory = 9;
 
         $categories = [];
 
         $faker = Factory::create('ru_RU');
 
         for ($i = 1; $i <= $maxCategory; $i++) {
-            if ($i == 1) {
-                $title = 'Без категории';
-                $parentId = 0;
-            } else {
-                $title = $faker->sentence(rand(1, 5), true);
-                $parentId = ($i > 4) ? rand(1, 4) : 1;
-            }
+            $disabled = ($i > 4) ? rand(0, 1) : 0;
 
-            $description = $faker->realText(rand(50, 200));
+            $title = $faker->sentence(rand(1, 5), true);
 
             $createdAt = $faker->dateTimeBetween('-3 months', '-2 months');
 
             $categories[] = [
-                'parent_id' => $parentId,
+                'disabled' => $disabled,
                 'title' => $title,
                 'slug' => Str::of($title)->slug(),
-                'description' => $description,
+                'description' => $faker->realText(rand(50, 200)),
                 'created_at' => $createdAt,
                 'updated_at' => $createdAt,
             ];

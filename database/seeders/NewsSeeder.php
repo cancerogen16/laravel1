@@ -16,10 +16,12 @@ class NewsSeeder extends Seeder
      */
     public function run()
     {
-        $maxCategory = 5;
+        $maxCategory = 9;
         $maxNews = 10;
 
         $news = [];
+
+        $statuses = ['draft', 'published', 'blocked'];
 
         $faker = Factory::create('ru_RU');
 
@@ -28,21 +30,21 @@ class NewsSeeder extends Seeder
                 $categoryId = 1 + rand(1, $maxCategory - 1);
 
                 $title = $faker->sentence(rand(3, 8), true);
-                $txt = $faker->realText(rand(100, 200));
+
                 $excerpt = $faker->realText(rand(10, 30));
-                $isPublished = rand(0, 1);
+                $description = $faker->realText(rand(100, 200));
+
+                $status = $statuses[rand(0, 2)];
 
                 $createdAt = $faker->dateTimeBetween('-3 months', '-2 months');
 
                 $news[] = [
                     'category_id' => $categoryId,
-                    'user_id' => (rand(1, 5) == 5) ? 1 : 2,
                     'title' => $title,
                     'slug' => Str::of($title)->slug(),
                     'excerpt' => $excerpt,
-                    'description' => $txt,
-                    'is_published' => $isPublished,
-                    'published_at' => $isPublished ? $createdAt : null,
+                    'description' => $description,
+                    'status' => $status,
                     'created_at' => $createdAt,
                     'updated_at' => $createdAt,
                 ];
