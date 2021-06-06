@@ -8,12 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
-class SourceController extends BaseController
+class OrderController extends BaseController
 {
-    public function input()
+    public function create()
     {
-        return view('sources.input');
+        return view('sources.create');
     }
 
     /**
@@ -32,10 +33,19 @@ class SourceController extends BaseController
 
         $data = $request->only(['name', 'phone', 'email', 'info']);
 
-        $this->saveSource($data);
+        $newsInfo = new News($data);
 
-        return redirect()->route('sources.input')
-            ->with('success', 'Ваше сообщение успешно отправлено.');
+        $newsInfo->save();
+
+        if ($newsInfo) {
+            return redirect()
+                ->route('news.edit', [$newsInfo->id])
+                ->with(['success' => 'Успешно сохранено!']);
+        } else {
+            return back()
+                ->withErrors(['msg' => 'Ошибка сохранения!'])
+                ->withInput();
+        }
     }
 
     /**

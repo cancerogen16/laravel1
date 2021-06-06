@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\CategoryCreateRequest;
 use App\Http\Requests\CategoryUpdateRequest;
 use App\Models\Category;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
 
 class CategoryController extends AdminBaseController
@@ -14,7 +16,7 @@ class CategoryController extends AdminBaseController
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function index()
     {
@@ -28,7 +30,7 @@ class CategoryController extends AdminBaseController
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function create()
     {
@@ -37,7 +39,11 @@ class CategoryController extends AdminBaseController
         return view('admin.categories.create', compact('category'));
     }
 
-    public function store(CategoryCreateRequest $request)
+    /**
+     * @param CategoryCreateRequest $request
+     * @return RedirectResponse
+     */
+    public function store(CategoryCreateRequest $request): RedirectResponse
     {
         $data = $request->input();
 
@@ -49,35 +55,18 @@ class CategoryController extends AdminBaseController
 
         $category->save();
 
-        if ($category) {
-            return redirect()
-                ->route('categories.edit', [$category->id])
-                ->with(['success' => 'Успешно сохранено!']);
-        } else {
-            return back()
-                ->withErrors(['msg' => 'Ошибка сохранения!'])
-                ->withInput();
-        }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        dd(__METHOD__);
+        return redirect()
+            ->route('categories.edit', [$category->id])
+            ->with(['success' => 'Успешно сохранено!']);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Application|Factory|View
      */
-    public function edit($id)
+    public function edit(int $id)
     {
         $category = Category::findOrFail($id);
 
@@ -87,17 +76,17 @@ class CategoryController extends AdminBaseController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param CategoryUpdateRequest $request
+     * @param int $id
+     * @return RedirectResponse
      */
-    public function update(CategoryUpdateRequest $request, $id)
+    public function update(CategoryUpdateRequest $request, int $id): RedirectResponse
     {
         $category = Category::find($id);
 
         if (empty($category)) {
             return back()
-                ->withErrors(['msg' => "Категория id=[{$id}] не найдена"])
+                ->withErrors(['msg' => "Категория id=[$id] не найдена"])
                 ->withInput();
         }
 
@@ -123,10 +112,10 @@ class CategoryController extends AdminBaseController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $result = Category::destroy($id);
 
