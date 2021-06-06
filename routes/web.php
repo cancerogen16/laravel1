@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Common\SuccessController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\MainController;
@@ -7,7 +8,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\NewsController;
 
 use App\Http\Controllers\FeedbackController;
-use App\Http\Controllers\SourceController;
+use App\Http\Controllers\OrderController;
 
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
@@ -21,18 +22,23 @@ Route::get('/', function () {
     return view('common.welcome');
 })->name('welcome');
 
+// Страница успешного события
+Route::get('/success', [SuccessController::class, 'index'])
+    ->name('success');
+
 // Страница обратной связи
-Route::get('/feedback', [FeedbackController::class, 'index'])
-    ->name('feedback');
+Route::get('/feedback', [FeedbackController::class, 'create'])
+    ->name('feedback.create');
+// Сохранение сообщения в базу
 Route::post('/feedback/store', [FeedbackController::class, 'store'])
     ->name('feedback.store');
 
 // Форма заказа на получение выгрузки данных из какого-либо источника
-Route::get('/source/input', [SourceController::class, 'input'])
-    ->name('source.input');
+Route::get('/order', [OrderController::class, 'create'])
+    ->name('order.create');
 // Сохранение источника в базу
-Route::post('/source/store', [SourceController::class, 'store'])
-    ->name('source.store');
+Route::post('/order/store', [OrderController::class, 'store'])
+    ->name('order.store');
 
 // Список новостей
 Route::get('/news', [NewsController::class, 'index'])

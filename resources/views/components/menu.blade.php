@@ -17,10 +17,10 @@
                         <a class="nav-link" href="{{ route('categories') }}">Категории</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('feedback') }}">Обратная связь</a>
+                        <a class="nav-link" href="{{ route('feedback.create') }}">Обратная связь</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('source.input') }}">Заказ выгрузки данных</a>
+                        <a class="nav-link" href="{{ route('order.create') }}">Заказ выгрузки данных</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">Авторизация</a>

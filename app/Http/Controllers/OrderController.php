@@ -2,25 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Source;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Order;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class OrderController extends BaseController
 {
+    /**
+     * @return Application|Factory|View
+     */
     public function create()
     {
-        return view('sources.create');
+        return view('orders.create');
     }
 
     /**
      * @param Request $request
      * @return RedirectResponse
-     * @throws FileNotFoundException
      */
     public function store(Request $request): RedirectResponse
     {
@@ -33,38 +34,12 @@ class OrderController extends BaseController
 
         $data = $request->only(['name', 'phone', 'email', 'info']);
 
-        $newsInfo = new News($data);
+        $order = new Order($data);
 
-        $newsInfo->save();
+        $order->save();
 
-        if ($newsInfo) {
-            return redirect()
-                ->route('news.edit', [$newsInfo->id])
-                ->with(['success' => 'Успешно сохранено!']);
-        } else {
-            return back()
-                ->withErrors(['msg' => 'Ошибка сохранения!'])
-                ->withInput();
-        }
-    }
-
-    /**
-     * @throws FileNotFoundException
-     */
-    public function saveSource($data)
-    {
-        $filename = 'orders.txt';
-
-        $orders = [];
-
-        if (Storage::disk('local')->exists($filename)) {
-            $jsonContent = Storage::get($filename);
-
-            $orders = json_decode($jsonContent, true);
-        }
-
-        $data = array_merge($orders, [$data]);
-
-        Storage::put($filename, json_encode($data));
+        return redirect()
+            ->route('success')
+            ->with(['success' => 'Выгрузка данных успешно заказана!']);
     }
 }
