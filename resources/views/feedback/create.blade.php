@@ -39,11 +39,11 @@
             <form class="row g-3 col-lg-6 col-md-8 mx-auto" method="post" action="{{ route('feedback.store') }}">
                 @csrf
                 <div class="form-group">
-                    <label for="name" class="form-label">Имя</label>
+                    <label for="name" class="form-label">Имя *</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder="Имя" value="{{ old('name') }}">
                 </div>
                 <div class="form-group">
-                    <label for="message">Сообщение</label>
+                    <label for="message">Сообщение *</label>
                     <textarea name="message" class="form-control" id="message" cols="30" rows="10" placeholder="Сообщение">{{ old('message') }}</textarea>
                 </div>
                 <div class="form-group">

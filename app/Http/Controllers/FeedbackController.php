@@ -2,22 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use App\Models\Message;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class FeedbackController extends BaseController
 {
-    public function index()
+    /**
+     * @return Application|Factory|View
+     */
+    public function create()
     {
-        return view('common.feedback');
+        return view('feedback.create');
     }
 
     /**
      * @param Request $request
      * @return RedirectResponse
-     * @throws FileNotFoundException
      */
     public function store(Request $request): RedirectResponse
     {
@@ -28,29 +32,12 @@ class FeedbackController extends BaseController
 
         $data = $request->only(['name', 'message']);
 
-        $this->saveReview($data);
+        $message = new Message($data);
 
-        return redirect()->route('feedback')
-            ->with('success', 'Ваше сообщение успешно отправлено.');
-    }
+        $message->save();
 
-    /**
-     * @throws FileNotFoundException
-     */
-    public function saveReview($data)
-    {
-        $filename = 'reviews.txt';
-
-        $reviews = [];
-
-        if (Storage::disk('local')->exists($filename)) {
-            $jsonContent = Storage::get($filename);
-
-            $reviews = json_decode($jsonContent, true);
-        }
-
-        $data = array_merge($reviews, [$data]);
-
-        Storage::put($filename, json_encode($data));
+        return redirect()
+            ->route('success')
+            ->with(['success' => 'Сообщение успешно отправлено!']);
     }
 }
