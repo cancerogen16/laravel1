@@ -33,7 +33,7 @@ Route::get('/feedback', [FeedbackController::class, 'create'])
     ->name('feedback.input');
 // Сохранение сообщения в базу
 Route::post('/feedback/store', [FeedbackController::class, 'store'])
-    ->name('feedback.store');
+    ->name('feedback.save');
 
 // Форма заказа на получение выгрузки данных из какого-либо источника
 Route::get('/order', [OrderController::class, 'create'])

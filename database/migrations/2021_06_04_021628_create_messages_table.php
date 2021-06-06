@@ -13,7 +13,7 @@ class CreateMessagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('feedback', function (Blueprint $table) {
+        Schema::create('messages', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100);
             $table->boolean('readed')->default(false);
@@ -29,6 +29,6 @@ class CreateMessagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('feedback');
+        Schema::dropIfExists('messages');
     }
 }

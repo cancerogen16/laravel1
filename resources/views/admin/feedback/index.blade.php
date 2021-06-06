@@ -6,6 +6,7 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Сообщения с формы обратной связи</h1>
     </div>
+    @include('common.result')
     <div class="table-responsive">
         <table class="table table-striped table-sm table-bordered">
             <thead>
@@ -24,8 +25,15 @@
                     <td>{{ $message->name }}</td>
                     <td>{{ $message->message }}</td>
                     <td>{{ $message->readed }}</td>
-                    <td><a href="{{ route('feedback.edit', ['feedback' => $message]) }}">Ред.</a>&nbsp;||&nbsp;
-                        <a href="javascript:;" class="delete">Уд.</a>
+                    <td>
+                        <form action="{{ route('feedback.destroy', $message->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <div class="btn-group" role="group">
+                                <a class="btn btn-primary" href="{{ route('feedback.edit', ['feedback' => $message]) }}">Ред.</a>
+                                <button type="submit" class="btn btn-danger">Удал.</button>
+                            </div>
+                        </form>
                     </td>
                 </tr>
             @empty

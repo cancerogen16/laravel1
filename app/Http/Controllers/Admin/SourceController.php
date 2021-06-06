@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Source;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+use Illuminate\Http\Response;
 
 class SourceController extends AdminBaseController
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View|Response
      */
     public function index()
     {
@@ -27,7 +29,7 @@ class SourceController extends AdminBaseController
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function create()
     {
@@ -39,10 +41,10 @@ class SourceController extends AdminBaseController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'url' => 'required',
@@ -54,35 +56,18 @@ class SourceController extends AdminBaseController
 
         $source->save();
 
-        if ($source) {
-            return redirect()
-                ->route('sources.edit', [$source->id])
-                ->with(['success' => 'Успешно сохранено!']);
-        } else {
-            return back()
-                ->withErrors(['msg' => 'Ошибка сохранения!'])
-                ->withInput();
-        }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return redirect()
+            ->route('sources.edit', [$source->id])
+            ->with(['success' => 'Успешно сохранено!']);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Application|Factory|View
      */
-    public function edit($id)
+    public function edit(int $id)
     {
         $source = Source::findOrFail($id);
 
@@ -92,11 +77,11 @@ class SourceController extends AdminBaseController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param int $id
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id): RedirectResponse
     {
         $request->validate([
             'url' => 'required',
@@ -128,11 +113,15 @@ class SourceController extends AdminBaseController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
-        //
+        Source::destroy($id);
+
+        return redirect()
+            ->route('sources.index')
+            ->with(['success' => 'Успешно удалено!']);
     }
 }

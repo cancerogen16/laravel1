@@ -6,6 +6,7 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Заказы на выгрузку данных</h1>
     </div>
+    @include('common.result')
     <div class="table-responsive">
         <table class="table table-striped table-sm table-bordered">
             <thead>
@@ -26,8 +27,15 @@
                     <td>{{ $order->phone }}</td>
                     <td>{{ $order->email }}</td>
                     <td>{{ $order->created_at->format('d-m-Y H:i') }}</td>
-                    <td><a href="{{ route('orders.edit', ['order' => $order]) }}">Ред.</a>&nbsp;||&nbsp;
-                        <a href="javascript:;" class="delete">Уд.</a>
+                    <td>
+                        <form action="{{ route('orders.destroy',$order->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <div class="btn-group" role="group">
+                                <a class="btn btn-primary" href="{{ route('orders.edit', ['order' => $order]) }}">Ред.</a>
+                                <button type="submit" class="btn btn-danger">Удал.</button>
+                            </div>
+                        </form>
                     </td>
                 </tr>
             @empty

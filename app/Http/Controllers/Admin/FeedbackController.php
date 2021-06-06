@@ -115,11 +115,15 @@ class FeedbackController extends AdminBaseController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return Response
+     * @param int $id
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
-        //
+        Message::destroy($id);
+
+        return redirect()
+            ->route('feedback.index')
+            ->with(['success' => 'Успешно удалено!']);
     }
 }

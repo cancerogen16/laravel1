@@ -11,6 +11,7 @@
             </div>
         </div>
     </div>
+    @include('common.result')
     <div class="table-responsive">
         <table class="table table-striped table-sm table-bordered">
             <thead>
@@ -31,8 +32,15 @@
                     <td>{{ $news->title }}</td>
                     <td>{{ $news->status }}</td>
                     <td>{{ $news->created_at->format('d-m-Y H:i') }}</td>
-                    <td><a href="{{ route('news.edit', ['news' => $news]) }}">Ред.</a>&nbsp;||&nbsp;
-                        <a href="javascript:;" class="delete">Уд.</a>
+                    <td>
+                        <form action="{{ route('news.destroy',$news->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <div class="btn-group" role="group">
+                                <a class="btn btn-primary" href="{{ route('news.edit', ['news' => $news]) }}">Ред.</a>
+                                <button type="submit" class="btn btn-danger">Удал.</button>
+                            </div>
+                        </form>
                     </td>
                 </tr>
             @empty

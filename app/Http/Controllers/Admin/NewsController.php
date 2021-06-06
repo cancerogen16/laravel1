@@ -125,11 +125,15 @@ class NewsController extends AdminBaseController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return Response
+     * @param int $id
+     * @return RedirectResponse
      */
-    public function destroy($id): Response
+    public function destroy(int $id): RedirectResponse
     {
-        dd(__METHOD__);
+        News::destroy($id);
+
+        return redirect()
+            ->route('news.index')
+            ->with(['success' => 'Успешно удалено!']);
     }
 }

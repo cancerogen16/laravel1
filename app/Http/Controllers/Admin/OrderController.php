@@ -8,7 +8,6 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class OrderController extends AdminBaseController
 {
@@ -120,10 +119,14 @@ class OrderController extends AdminBaseController
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return Response
+     * @return RedirectResponse
      */
-    public function destroy(int $id)
+    public function destroy(int $id): RedirectResponse
     {
-        //
+        Order::destroy($id);
+
+        return redirect()
+            ->route('orders.index')
+            ->with(['success' => 'Успешно удалено!']);
     }
 }

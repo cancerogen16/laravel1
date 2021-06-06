@@ -16,7 +16,7 @@
                 @include('common.result')
             </div>
 
-            <form class="row g-3 col-lg-6 col-md-8 mx-auto" method="post" action="{{ route('feedback.store') }}">
+            <form class="row g-3 col-lg-6 col-md-8 mx-auto" method="post" action="{{ route('feedback.save') }}">
                 @csrf
                 <div class="form-group">
                     <label for="name" class="form-label">Имя *</label>

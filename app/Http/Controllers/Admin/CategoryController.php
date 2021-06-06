@@ -121,7 +121,7 @@ class CategoryController extends AdminBaseController
 
         if ($result) {
             return redirect()
-                ->route('admin.index')
+                ->route('categories.index')
                 ->with(['success' => "Категория [$id] удалена"]);
         } else {
             return back()
