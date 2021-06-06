@@ -19,7 +19,7 @@
             <form class="row g-3" method="post" action="{{ route('news.store') }}">
                 @csrf
                 <div class="form-group">
-                    <label for="title" class="form-label">Заголовок</label>
+                    <label for="title" class="form-label">Заголовок *</label>
                     <input type="text" class="form-control" id="title" name="title" placeholder="Заголовок" value="{{ old('title') }}">
                 </div>
                 <div class="form-group">
@@ -31,7 +31,7 @@
                     <input type="file" class="form-control" id="image" name="image">
                 </div>
                 <div class="form-group">
-                    <label for="category_id">Категория</label>
+                    <label for="category_id">Категория *</label>
                     <select class="form-select" id="category_id" name="category_id">
                         @foreach($categories as $category)
                             <option value="{{ $category->id }}">{{ $category->title }}</option>
@@ -43,8 +43,16 @@
                     <textarea name="excerpt" class="form-control" id="excerpt" cols="30" rows="3" placeholder="Отрывок">{{ old('excerpt') }}</textarea>
                 </div>
                 <div class="form-group">
-                    <label for="description">Описание</label>
+                    <label for="description">Описание *</label>
                     <textarea name="description" class="form-control" id="description" cols="30" rows="10" placeholder="Описание">{{ old('description') }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="status" class="form-label">Статус</label>
+                    <select class="form-select" id="status" name="status">
+                        @foreach($statuses as $status)
+                            <option value="{{ $status->slug }}">{{ $status->title }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-outline-success">Сохранить</button>

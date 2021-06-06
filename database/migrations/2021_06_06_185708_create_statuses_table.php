@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddSlugFieldInNewsTable extends Migration
+class CreateStatusesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class AddSlugFieldInNewsTable extends Migration
      */
     public function up()
     {
-        Schema::table('news', function (Blueprint $table) {
-            $table->string('slug', 191)->nullable();
+        Schema::create('statuses', function (Blueprint $table) {
+            $table->id();
+            $table->string('title', 191);
+            $table->string('slug', 50);
         });
     }
 
@@ -25,8 +27,6 @@ class AddSlugFieldInNewsTable extends Migration
      */
     public function down()
     {
-        Schema::table('news', function (Blueprint $table) {
-            $table->dropColumn('slug');
-        });
+        Schema::dropIfExists('statuses');
     }
 }

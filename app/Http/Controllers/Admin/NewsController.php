@@ -6,6 +6,7 @@ use App\Http\Requests\NewsCreateRequest;
 use App\Http\Requests\NewsUpdateRequest;
 use App\Models\News;
 use App\Models\Category;
+use App\Models\Status;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -40,9 +41,11 @@ class NewsController extends AdminBaseController
     {
         $categories = Category::all();
 
+        $statuses = Status::all();
+
         $news = new News();
 
-        return view('admin.news.create', compact('news', 'categories'));
+        return view('admin.news.create', compact('news', 'categories', 'statuses'));
     }
 
     /**
@@ -76,9 +79,11 @@ class NewsController extends AdminBaseController
     {
         $categories = Category::all();
 
+        $statuses = Status::all();
+
         $newsInfo = News::findOrFail($id);
 
-        return view('admin.news.edit', compact('newsInfo', 'categories'));
+        return view('admin.news.edit', compact('newsInfo', 'categories', 'statuses'));
     }
 
     /**
