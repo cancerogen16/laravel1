@@ -16,9 +16,7 @@ class CategoryController extends BaseController
      */
     public function index()
     {
-        $categoryModel = new Category();
-
-        $categories = $categoryModel->getCategoriesList();
+        $categories = Category::all();
 
         return view('categories.index', compact('categories'));
     }
@@ -31,11 +29,11 @@ class CategoryController extends BaseController
      */
     public function show($id)
     {
-        $title = 'Новости из категории';
+        $category_news = News::where('category_id', '=', $id)
+            ->where('status', '=', 'published')
+            ->get();
 
-        $categoryModel = new Category();
-
-        $category_news = $categoryModel->getCategoryNews($id);
+        $title = 'Новости из категории ';
 
         $category = Category::find($id);
 

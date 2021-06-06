@@ -1,12 +1,13 @@
 @extends('layouts.app')
 
-@section('title'){{ $current_post->title }}@endsection
+@section('title'){{ $news->title }}@endsection
 
 @section('content')
     <section class="py-5 text-center container">
         <div class="row py-lg-5">
             <div class="col-lg-6 col-md-8 mx-auto">
-                <h1 class="fw-light">{{ $current_post->title }}</h1>
+                <h1 class="fw-light">{{ $news->title }}</h1>
+                <p class="lead text-muted">{{ $news->category->title }}</p>
             </div>
         </div>
     </section>
@@ -17,10 +18,10 @@
                     <div class="card shadow-sm">
                         <div class="card-img-top">
                             <div class="card-img">
-                                @if($current_post->image)
-                                    <img src="{{ $current_post->image }}" alt="{{ $current_post->title }}">
+                                @if($news->image)
+                                    <img src="{{ $news->image }}" alt="{{ $news->title }}">
                                 @else
-                                    <svg class="bd-placeholder-img card-img-top" width="100%" height="500"
+                                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
                                          xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                         <defs>
                                             <path id="path1" d="M10,30 H190 M10,60 H190 M10,90 H190 M10,120 H190"></path>
@@ -31,9 +32,15 @@
                                 @endif
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card shadow-sm">
                         <div class="card-body">
-                            <small class="text-muted">{{ $current_post->created_at }}</small>
-                            <p class="card-text">{{ $current_post->description }}</p>
+                            <div class="d-flex justify-content-between">
+                                <small class="text-muted">{{ $news->created_at->format('d.m.Y H:i') }}</small>
+                            </div>
+                            <p class="card-text">{{ $news->description }}</p>
                         </div>
                     </div>
                 </div>

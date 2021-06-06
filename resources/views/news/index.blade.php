@@ -7,13 +7,14 @@
     <div class="row py-lg-5">
         <div class="col-lg-6 col-md-8 mx-auto">
             <h1 class="fw-light">Новости</h1>
+            <p class="lead text-muted"> Всего записей: {{ $newsList->count() }}</p>
         </div>
     </div>
 </section>
 <div class="album py-5 bg-light">
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            @foreach($news as $post)
+            @foreach($newsList as $post)
             <div class="col">
                 <div class="card shadow-sm">
                     <div class="card-img-top">
@@ -33,7 +34,12 @@
                         </div>
                         <div class="card-title-wrap">
                             <div class="card-title">
-                                {{ $post->title }}
+                                <div class="card-title">
+                                    {{ $post->title }}
+                                </div>
+                                <div class="category-title">
+                                    {{ $post->category->title }}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -44,7 +50,7 @@
                             <div class="btn-group">
                                 <a href="/news/{{ $post->id }}" class="btn btn-sm btn-outline-secondary">Подробнее</a>
                             </div>
-                            <small class="text-muted">{{ $post->created_at }}</small>
+                            <small class="text-muted">{{ $post->created_at->format('d.m.Y H:i') }}</small>
                         </div>
                     </div>
                 </div>
