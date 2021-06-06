@@ -30,7 +30,7 @@ Route::get('/success', [SuccessController::class, 'index'])
 
 // Страница обратной связи
 Route::get('/feedback', [FeedbackController::class, 'create'])
-    ->name('feedback.create');
+    ->name('feedback.input');
 // Сохранение сообщения в базу
 Route::post('/feedback/store', [FeedbackController::class, 'store'])
     ->name('feedback.store');

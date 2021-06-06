@@ -6,16 +6,8 @@
     <div class="col-md-8 pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Добавить источник</h1>
 
-        @if($errors->any())
-            @foreach($errors->all() as $error)
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    {{ $error }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endforeach
-        @endif
-
         <div class="mb-2">
+            @include('common.result')
             <form class="row g-3" method="post" action="{{ route('sources.store') }}">
                 @csrf
                 <div class="form-group">

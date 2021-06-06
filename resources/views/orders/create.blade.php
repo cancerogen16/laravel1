@@ -12,30 +12,9 @@
     </section>
     <div class="py-5 bg-light">
         <div class="container">
-            @if ($errors->any())
-                <div class="row g-3 col-lg-6 col-md-8 mx-auto">
-                    <div class="col-12">
-                        @foreach ($errors->all() as $error)
-                            <div class="alert alert-danger">
-                                {{ $error }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            @endif
-
-            @if (session('success'))
-                <div class="row g-3 col-lg-6 col-md-8 mx-auto">
-                    <div class="col-12">
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            {{ session()->get('success') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    </div>
-                </div>
-            @endif
-
+            <div class="row g-3 col-lg-6 col-md-8 mx-auto">
+                @include('common.result')
+            </div>
             <form class="row g-3 col-lg-6 col-md-8 mx-auto" method="post" action="{{ route('order.store') }}">
                 @csrf
                 <div class="form-group">

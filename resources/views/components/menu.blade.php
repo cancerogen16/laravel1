@@ -17,7 +17,7 @@
                         <a class="nav-link" href="{{ route('categories') }}">Категории</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('feedback.create') }}">Обратная связь</a>
+                        <a class="nav-link" href="{{ route('feedback.input') }}">Обратная связь</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('order.create') }}">Заказ выгрузки данных</a>
