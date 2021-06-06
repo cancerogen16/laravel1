@@ -17,11 +17,15 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link @if(request()->routeIs('sources.*')) active @endif" href="{{ route('sources.index') }}">
-                    <span data-feather="shopping-cart"></span>Источники данных</a>
+                    <span data-feather="briefcase"></span>Источники данных</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="users"></span>Customers</a>
+                <a class="nav-link @if(request()->routeIs('orders.*')) active @endif" href="{{ route('orders.index') }}">
+                    <span data-feather="shopping-cart"></span>Заказы выгрузки данных</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @if(request()->routeIs('feedback.*')) active @endif" href="{{ route('feedback.index') }}">
+                    <span data-feather="message-square"></span>Сообщения</a>
             </li>
         </ul>
     </div>

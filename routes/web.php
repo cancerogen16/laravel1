@@ -13,6 +13,8 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\SourceController as AdminSourceController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\Admin\FeedbackController as AdminFeedbackController;
 
 // e. Страница авторизации.
 Auth::routes();
@@ -73,4 +75,10 @@ Route::group(['prefix' => 'admin'], function () {
 
     // Редактирование источников данных
     Route::resource('sources', AdminSourceController::class);
+
+    // Редактирование заказов на выгрузку данных
+    Route::resource('orders', AdminOrderController::class);
+
+    // Редактирование сообщений
+    Route::resource('feedback', AdminFeedbackController::class);
 });
