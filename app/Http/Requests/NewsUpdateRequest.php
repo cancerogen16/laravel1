@@ -11,7 +11,7 @@ class NewsUpdateRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
 //        return auth()->check();
         return true;
@@ -22,7 +22,7 @@ class NewsUpdateRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'title' => 'required|min:5|max:200',
