@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\SourceRequest;
 use App\Models\Source;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class SourceController extends AdminBaseController
@@ -41,15 +41,11 @@ class SourceController extends AdminBaseController
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param SourceRequest $request
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store(SourceRequest $request): RedirectResponse
     {
-        $request->validate([
-            'url' => 'required',
-        ]);
-
         $data = $request->input();
 
         $source = new Source($data);
@@ -77,16 +73,12 @@ class SourceController extends AdminBaseController
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param SourceRequest $request
      * @param int $id
      * @return RedirectResponse
      */
-    public function update(Request $request, int $id): RedirectResponse
+    public function update(SourceRequest $request, int $id): RedirectResponse
     {
-        $request->validate([
-            'url' => 'required',
-        ]);
-
         $source = Source::find($id);
 
         if (empty($source)) {

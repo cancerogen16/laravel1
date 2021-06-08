@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\FeedbackRequest;
 use App\Models\Message;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class FeedbackController extends AdminBaseController
 {
@@ -41,16 +40,11 @@ class FeedbackController extends AdminBaseController
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param FeedbackRequest $request
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store(FeedbackRequest $request): RedirectResponse
     {
-        $request->validate([
-            'name' => 'required',
-            'message' => 'required',
-        ]);
-
         $data = $request->input();
 
         $message = new Message($data);
@@ -78,17 +72,12 @@ class FeedbackController extends AdminBaseController
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param FeedbackRequest $request
      * @param int $id
      * @return RedirectResponse
      */
-    public function update(Request $request, int $id): RedirectResponse
+    public function update(FeedbackRequest $request, int $id): RedirectResponse
     {
-        $request->validate([
-            'name' => 'required',
-            'message' => 'required',
-        ]);
-
         $message = Message::find($id);
 
         if (empty($message)) {

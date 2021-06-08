@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FeedbackRequest;
 use App\Models\Message;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -20,16 +21,11 @@ class FeedbackController extends BaseController
     }
 
     /**
-     * @param Request $request
+     * @param FeedbackRequest $request
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store(FeedbackRequest $request): RedirectResponse
     {
-        $request->validate([
-            'name' => 'required|max:55',
-            'message' => 'required|max:255',
-        ]);
-
         $data = $request->only(['name', 'message']);
 
         $message = new Message($data);

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OrderRequest;
 use App\Models\Order;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class OrderController extends BaseController
 {
@@ -20,18 +20,11 @@ class OrderController extends BaseController
     }
 
     /**
-     * @param Request $request
+     * @param OrderRequest $request
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store(OrderRequest $request): RedirectResponse
     {
-        $request->validate([
-            'name' => 'required|max:55',
-            'phone' => 'required|max:20',
-            'email' => 'required|email:rfc,dns',
-            'info' => 'required|max:255',
-        ]);
-
         $data = $request->only(['name', 'phone', 'email', 'info']);
 
         $order = new Order($data);

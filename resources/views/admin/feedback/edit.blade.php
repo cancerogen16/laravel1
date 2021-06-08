@@ -14,10 +14,16 @@
                 <div class="form-group">
                     <label for="name" class="form-label">Имя *</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder="Имя" value="{{ $message->name }}">
+                    @error('name')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="message">Сообщение *</label>
                     <textarea name="message" class="form-control" id="message" cols="30" rows="10" placeholder="Сообщение">{{ $message->message }}</textarea>
+                    @error('message')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-outline-success">Сохранить</button>

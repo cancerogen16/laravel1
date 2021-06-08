@@ -20,18 +20,30 @@
                 <div class="form-group">
                     <label for="name" class="form-label">Имя *</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder="Имя" value="{{ old('name') }}">
+                    @error('name')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="phone" class="form-label">Номер телефона *</label>
                     <input type="text" class="form-control" id="phone" name="phone" placeholder="Номер телефона" value="{{ old('phone') }}">
+                    @error('phone')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="email" class="form-label">Email-адрес *</label>
                     <input type="text" class="form-control" id="email" name="email" placeholder="Email-адрес" value="{{ old('email') }}">
+                    @error('email')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="info">Информация *</label>
                     <textarea name="info" class="form-control" id="info" cols="30" rows="10" placeholder="Информация">{{ old('info') }}</textarea>
+                    @error('info')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-outline-success">Отправить</button>

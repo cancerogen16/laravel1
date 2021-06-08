@@ -11,8 +11,11 @@
             <form class="row g-3" method="post" action="{{ route('sources.store') }}">
                 @csrf
                 <div class="form-group">
-                    <label for="url" class="form-label">URL</label>
+                    <label for="url" class="form-label">URL *</label>
                     <input type="text" class="form-control" id="url" name="url" placeholder="URL" value="{{ old('url') }}">
+                    @error('url')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="description">Описание</label>

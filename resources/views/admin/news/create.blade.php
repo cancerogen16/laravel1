@@ -13,6 +13,9 @@
                 <div class="form-group">
                     <label for="title" class="form-label">Заголовок *</label>
                     <input type="text" class="form-control" id="title" name="title" placeholder="Заголовок" value="{{ old('title') }}">
+                    @error('title')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="slug" class="form-label">Ярлык</label>
@@ -29,6 +32,9 @@
                             <option value="{{ $category->id }}">{{ $category->title }}</option>
                         @endforeach
                     </select>
+                    @error('category_id')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="excerpt">Отрывок</label>
@@ -37,6 +43,9 @@
                 <div class="form-group">
                     <label for="description">Описание *</label>
                     <textarea name="description" class="form-control" id="description" cols="30" rows="10" placeholder="Описание">{{ old('description') }}</textarea>
+                    @error('description')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="status" class="form-label">Статус</label>

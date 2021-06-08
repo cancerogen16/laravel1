@@ -27,7 +27,23 @@ class CategoryCreateRequest extends FormRequest
         return [
             'title' => 'required|min:5|max:200',
             'slug' => 'max:200',
-            'description' => 'string|min:3|max:500',
+            'description' => 'required|min:3|max:500',
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'title' => 'Заголовок категории',
+            'slug' => 'Ярлык',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'title.required' => 'Заголовок категории обязателен для заполнения.',
+            'description.required' => 'Описание обязательно для заполнения.',
         ];
     }
 }

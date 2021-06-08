@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\OrderRequest;
 use App\Models\Order;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class OrderController extends AdminBaseController
 {
@@ -40,18 +40,11 @@ class OrderController extends AdminBaseController
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param OrderRequest $request
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store(OrderRequest $request): RedirectResponse
     {
-        $request->validate([
-            'name' => 'required|max:55',
-            'phone' => 'required|max:20',
-            'email' => 'required|email:rfc,dns',
-            'info' => 'required|max:255',
-        ]);
-
         $data = $request->input();
 
         $order = new Order($data);
@@ -79,19 +72,12 @@ class OrderController extends AdminBaseController
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param OrderRequest $request
      * @param int $id
      * @return RedirectResponse
      */
-    public function update(Request $request, int $id): RedirectResponse
+    public function update(OrderRequest $request, int $id): RedirectResponse
     {
-        $request->validate([
-            'name' => 'required|max:55',
-            'phone' => 'required|max:20',
-            'email' => 'required|email:rfc,dns',
-            'info' => 'required|max:255',
-        ]);
-
         $order = Order::find($id);
 
         if (empty($order)) {
