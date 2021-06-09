@@ -7,6 +7,7 @@ use App\Models\Source;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 
@@ -103,17 +104,17 @@ class SourceController extends AdminBaseController
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
      * @param int $id
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function destroy(int $id): RedirectResponse
+    public function destroy(int $id): JsonResponse
     {
-        Source::destroy($id);
+        if (Source::destroy($id)) {
+            $json = ['success' => 'Успешно удален источник с #ID=' . $id];
+        } else {
+            $json = ['error' => 'Ошибка удаления'];
+        }
 
-        return redirect()
-            ->route('sources.index')
-            ->with(['success' => 'Успешно удалено!']);
+        return response()->json($json);
     }
 }

@@ -28,14 +28,10 @@
                     <td>{{ $order->email }}</td>
                     <td>{{ $order->created_at->format('d-m-Y H:i') }}</td>
                     <td>
-                        <form action="{{ route('orders.destroy',$order->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <div class="btn-group" role="group">
-                                <a class="btn btn-primary" href="{{ route('orders.edit', ['order' => $order]) }}">Ред.</a>
-                                <button type="submit" class="btn btn-danger">Удал.</button>
-                            </div>
-                        </form>
+                        <div class="btn-group" role="group">
+                            <a class="btn btn-primary" href="{{ route('orders.edit', $order->id) }}">Ред.</a>
+                            <a class="btn btn-danger deleteRecord" href="{{ route('orders.destroy', $order->id) }}" data-id="{{ $order->id }}">Удал.</a>
+                        </div>
                     </td>
                 </tr>
             @empty

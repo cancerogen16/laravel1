@@ -8,6 +8,7 @@ use App\Models\Category;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
 
@@ -110,22 +111,17 @@ class CategoryController extends AdminBaseController
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return RedirectResponse
+     * @param Category $category
+     * @return JsonResponse
      */
-    public function destroy(int $id): RedirectResponse
+    public function destroy(Category $category): JsonResponse
     {
-        $result = Category::destroy($id);
-
-        if ($result) {
-            return redirect()
-                ->route('categories.index')
-                ->with(['success' => "Категория [$id] удалена"]);
+        if ($category->delete()) {
+            $json = ['success' => 'Успешно удалена категория с #ID=' . $category->id];
         } else {
-            return back()
-                ->withErrors(['msg' => "Ошибка удаления"]);
+            $json = ['error' => 'Ошибка удаления'];
         }
+
+        return response()->json($json);
     }
 }

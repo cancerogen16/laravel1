@@ -7,6 +7,7 @@ use App\Models\Order;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 
 class OrderController extends AdminBaseController
@@ -102,17 +103,17 @@ class OrderController extends AdminBaseController
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
      * @param int $id
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function destroy(int $id): RedirectResponse
+    public function destroy(int $id): JsonResponse
     {
-        Order::destroy($id);
+        if (Order::destroy($id)) {
+            $json = ['success' => 'Успешно удален заказ с #ID=' . $id];
+        } else {
+            $json = ['error' => 'Ошибка удаления'];
+        }
 
-        return redirect()
-            ->route('orders.index')
-            ->with(['success' => 'Успешно удалено!']);
+        return response()->json($json);
     }
 }

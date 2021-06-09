@@ -33,14 +33,10 @@
                     <td>{{ $news->status }}</td>
                     <td>{{ $news->created_at->format('d-m-Y H:i') }}</td>
                     <td>
-                        <form action="{{ route('news.destroy',$news->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <div class="btn-group" role="group">
-                                <a class="btn btn-primary" href="{{ route('news.edit', ['news' => $news]) }}">Ред.</a>
-                                <button type="submit" class="btn btn-danger">Удал.</button>
-                            </div>
-                        </form>
+                        <div class="btn-group" role="group">
+                            <a class="btn btn-primary" href="{{ route('news.edit', $news->id) }}">Ред.</a>
+                            <a class="btn btn-danger deleteRecord" href="{{ route('news.destroy', $news->id) }}" data-id="{{ $news->id }}">Удал.</a>
+                        </div>
                     </td>
                 </tr>
             @empty

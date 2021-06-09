@@ -26,14 +26,10 @@
                     <td>{{ $message->message }}</td>
                     <td>{{ $message->readed }}</td>
                     <td>
-                        <form action="{{ route('feedback.destroy', $message->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <div class="btn-group" role="group">
-                                <a class="btn btn-primary" href="{{ route('feedback.edit', ['feedback' => $message]) }}">Ред.</a>
-                                <button type="submit" class="btn btn-danger">Удал.</button>
-                            </div>
-                        </form>
+                        <div class="btn-group" role="group">
+                            <a class="btn btn-primary" href="{{ route('feedback.edit', ['feedback' => $message]) }}">Ред.</a>
+                            <a class="btn btn-danger deleteRecord" href="{{ route('feedback.destroy', $message->id) }}" data-id="{{ $message->id }}">Удал.</a>
+                        </div>
                     </td>
                 </tr>
             @empty

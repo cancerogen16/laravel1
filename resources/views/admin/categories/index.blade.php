@@ -29,14 +29,10 @@
                     <td>{{ $category->title }}</td>
                     <td>{{ $category->created_at }}</td>
                     <td>
-                        <form action="{{ route('categories.destroy',$category->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <div class="btn-group" role="group">
-                                <a class="btn btn-primary" href="{{ route('categories.edit', ['category' => $category]) }}">Ред.</a>
-                                <button type="submit" class="btn btn-danger">Удал.</button>
-                            </div>
-                        </form>
+                        <div class="btn-group" role="group">
+                            <a class="btn btn-primary" href="{{ route('categories.edit', $category->id) }}">Ред.</a>
+                            <a class="btn btn-danger deleteRecord" href="{{ route('categories.destroy', $category->id) }}" data-id="{{ $category->id }}">Удал.</a>
+                        </div>
                     </td>
                 </tr>
             @empty

@@ -10,8 +10,8 @@ use App\Models\Status;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 
 class NewsController extends AdminBaseController
@@ -123,17 +123,17 @@ class NewsController extends AdminBaseController
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return RedirectResponse
+     * @param News $news
+     * @return JsonResponse
      */
-    public function destroy(int $id): RedirectResponse
+    public function destroy(News $news): JsonResponse
     {
-        News::destroy($id);
+        if ($news->delete()) {
+            $json = ['success' => 'Успешно удалена запись с #ID=' . $news->id];
+        } else {
+            $json = ['error' => 'Ошибка удаления'];
+        }
 
-        return redirect()
-            ->route('news.index')
-            ->with(['success' => 'Успешно удалено!']);
+        return response()->json($json);
     }
 }

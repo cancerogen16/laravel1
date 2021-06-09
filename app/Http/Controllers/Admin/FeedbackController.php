@@ -7,6 +7,7 @@ use App\Models\Message;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 
 class FeedbackController extends AdminBaseController
@@ -102,17 +103,17 @@ class FeedbackController extends AdminBaseController
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
      * @param int $id
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function destroy(int $id): RedirectResponse
+    public function destroy(int $id): JsonResponse
     {
-        Message::destroy($id);
+        if (Message::destroy($id)) {
+            $json = ['success' => 'Успешно удалено сообщение с #ID=' . $id];
+        } else {
+            $json = ['error' => 'Ошибка удаления'];
+        }
 
-        return redirect()
-            ->route('feedback.index')
-            ->with(['success' => 'Успешно удалено!']);
+        return response()->json($json);
     }
 }
