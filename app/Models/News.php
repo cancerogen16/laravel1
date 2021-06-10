@@ -19,6 +19,7 @@ class News extends Model
         'title',
         'slug',
         'image',
+        'excerpt',
         'description',
         'status',
     ];
