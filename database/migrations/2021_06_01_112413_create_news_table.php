@@ -19,7 +19,7 @@ class CreateNewsTable extends Migration
                 ->constrained('categories')
                 ->cascadeOnDelete();
             $table->string('title', 191);
-            $table->string('slug', 191)->nullable();
+            $table->string('slug', 191)->unique();
 
             $table->string('image', 255)->nullable();
 
