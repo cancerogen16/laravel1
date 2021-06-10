@@ -27,6 +27,7 @@ class NewsCreateRequest extends FormRequest
         return [
             'title' => 'required|min:5|max:200',
             'slug' => 'max:200',
+            'image' => 'sometimes',
             'description' => 'required|min:3|max:500',
         ];
     }

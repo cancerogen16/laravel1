@@ -54,7 +54,7 @@ class NewsController extends AdminBaseController
      */
     public function store(NewsCreateRequest $request): RedirectResponse
     {
-        $fields = $request->only('category_id', 'title', 'description', 'image');
+        $fields = $request->validated();
 
         $fields['slug'] = $this->createSlug($fields['title']);
 

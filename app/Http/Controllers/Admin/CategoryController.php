@@ -46,7 +46,7 @@ class CategoryController extends AdminBaseController
      */
     public function store(CategoryCreateRequest $request): RedirectResponse
     {
-        $fields = $request->input();
+        $fields = $request->validated();
 
         $fields['slug'] = $this->createSlug($fields['title']);
 
