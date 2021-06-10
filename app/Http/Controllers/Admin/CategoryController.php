@@ -46,19 +46,50 @@ class CategoryController extends AdminBaseController
      */
     public function store(CategoryCreateRequest $request): RedirectResponse
     {
-        $data = $request->input();
+        $fields = $request->input();
 
-        if (empty($data['slug'])) {
-            $data['slug'] = Str::slug($data['title']);
+        $fields['slug'] = $this->createSlug($fields['title']);
+
+        $category = Category::create($fields);
+
+        if ($category) {
+            return redirect()
+                ->route('categories.edit', [$category->id])
+                ->with(['success' => 'Успешно сохранено!']);
         }
 
-        $category = new Category($data);
+        return back()->withInput();
+    }
 
-        $category->save();
+    public function createSlug($title, $id = 0)
+    {
+        $slug = Str::slug($title);
 
-        return redirect()
-            ->route('categories.edit', [$category->id])
-            ->with(['success' => 'Успешно сохранено!']);
+        $allSlugs = $this->getRelatedSlugs($slug, $id);
+
+        if (!$allSlugs->contains('slug', $slug)) {
+            return $slug;
+        }
+
+        $i = 1;
+        $is_contain = true;
+
+        do {
+            $newSlug = $slug . '-' . $i;
+
+            if (!$allSlugs->contains('slug', $newSlug)) {
+                return $newSlug;
+            }
+
+            $i++;
+        } while ($is_contain);
+    }
+
+    protected function getRelatedSlugs($slug, $id = 0)
+    {
+        return Category::select('slug')->where('slug', 'like', $slug.'%')
+            ->where('id', '<>', $id)
+            ->get();
     }
 
     /**

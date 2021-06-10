@@ -12,7 +12,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Str;
+use Str;
 
 class NewsController extends AdminBaseController
 {
@@ -54,19 +54,50 @@ class NewsController extends AdminBaseController
      */
     public function store(NewsCreateRequest $request): RedirectResponse
     {
-        $data = $request->input();
+        $fields = $request->only('category_id', 'title', 'description', 'image');
 
-        if (empty($data['slug'])) {
-            $data['slug'] = Str::slug($data['title']);
+        $fields['slug'] = $this->createSlug($fields['title']);
+
+        $newsInfo = News::create($fields);
+
+        if ($newsInfo) {
+            return redirect()
+                ->route('news.edit', [$newsInfo->id])
+                ->with(['success' => 'Успешно сохранено!']);
         }
 
-        $newsInfo = new News($data);
+        return back()->withInput();
+    }
 
-        $newsInfo->save();
+    public function createSlug($title, $id = 0)
+    {
+        $slug = Str::slug($title);
 
-        return redirect()
-            ->route('news.edit', [$newsInfo->id])
-            ->with(['success' => 'Успешно сохранено!']);
+        $allSlugs = $this->getRelatedSlugs($slug, $id);
+
+        if (!$allSlugs->contains('slug', $slug)) {
+            return $slug;
+        }
+
+        $i = 1;
+        $is_contain = true;
+
+        do {
+            $newSlug = $slug . '-' . $i;
+
+            if (!$allSlugs->contains('slug', $newSlug)) {
+                return $newSlug;
+            }
+
+            $i++;
+        } while ($is_contain);
+    }
+
+    protected function getRelatedSlugs($slug, $id = 0)
+    {
+        return News::select('slug')->where('slug', 'like', $slug.'%')
+            ->where('id', '<>', $id)
+            ->get();
     }
 
     /**
