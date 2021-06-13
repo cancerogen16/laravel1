@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\Account\IndexController as AccountController;
 use App\Http\Controllers\Common\SuccessController;
-use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\MainController;
 use App\Http\Controllers\CategoryController;
@@ -59,26 +59,38 @@ Route::get('/categories', [CategoryController::class, 'index'])
 Route::get('/categories/{id}/news', [CategoryController::class, 'show'])
     ->where('id', '\d+');
 
+// Account
+Route::group(['middleware' => 'auth'], function () {
+    // Личный кабинет
+    Route::group(['prefix' => 'account'], function () {
+        Route::get('/', AccountController::class)
+            ->name('account');
 
-/* Админка портала */
-// Панель администратора
-Route::get('/admin', [MainController::class, 'index'])
-    ->name('admin.index');
+        Route::get('/logout', function () {
+            Auth::logout();
+            return redirect()->route('login');
+        })->name('account.logout');
+    });
 
-Route::group(['prefix' => 'admin'], function () {
-    // Редактирование рубрик новостей в админке
-    Route::resource('categories', AdminCategoryController::class);
+    /* Админка портала */
+    Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
+        // Панель администратора
+        Route::get('/', [MainController::class, 'index'])
+            ->name('admin.index');
+        // Редактирование рубрик новостей в админке
+        Route::resource('categories', AdminCategoryController::class);
 
-    // Редактирование новостей в админке
-    // f. Страница добавления новости.
-    Route::resource('news', AdminNewsController::class);
+        // Редактирование новостей в админке
+        // f. Страница добавления новости.
+        Route::resource('news', AdminNewsController::class);
 
-    // Редактирование источников данных
-    Route::resource('sources', AdminSourceController::class);
+        // Редактирование источников данных
+        Route::resource('sources', AdminSourceController::class);
 
-    // Редактирование заказов на выгрузку данных
-    Route::resource('orders', AdminOrderController::class);
+        // Редактирование заказов на выгрузку данных
+        Route::resource('orders', AdminOrderController::class);
 
-    // Редактирование сообщений
-    Route::resource('feedback', AdminFeedbackController::class);
+        // Редактирование сообщений
+        Route::resource('feedback', AdminFeedbackController::class);
+    });
 });
