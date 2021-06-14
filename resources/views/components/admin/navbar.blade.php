@@ -27,6 +27,10 @@
                 <a class="nav-link @if(request()->routeIs('feedback.*')) active @endif" href="{{ route('feedback.index') }}">
                     <span data-feather="message-square"></span>Сообщения</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link @if(request()->routeIs('users.*')) active @endif" href="{{ route('users.index') }}">
+                    <span data-feather="users"></span>Профили пользователей</a>
+            </li>
         </ul>
     </div>
 </nav>

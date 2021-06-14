@@ -30,7 +30,7 @@
                     <td>{{ $source->created_at->format('d-m-Y H:i') }}</td>
                     <td>
                         <div class="btn-group" role="group">
-                            <a class="btn btn-primary" href="{{ route('orders.edit', $source->id) }}">Ред.</a>
+                            <a class="btn btn-primary" href="{{ route('sources.edit', $source->id) }}">Ред.</a>
                             <a class="btn btn-danger deleteRecord" href="{{ route('sources.destroy', $source->id) }}" data-id="{{ $source->id }}">Удал.</a>
                         </div>
                     </td>

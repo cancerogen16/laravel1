@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\SourceController as AdminSourceController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\FeedbackController as AdminFeedbackController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 
 // e. Страницы регистрации, авторизации и т.п.
 Auth::routes();
@@ -81,7 +82,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('categories', AdminCategoryController::class);
 
         // Редактирование новостей в админке
-        // f. Страница добавления новости.
         Route::resource('news', AdminNewsController::class);
 
         // Редактирование источников данных
@@ -92,5 +92,8 @@ Route::group(['middleware' => 'auth'], function () {
 
         // Редактирование сообщений
         Route::resource('feedback', AdminFeedbackController::class);
+
+        // Редактирование профилей пользователей в админке
+        Route::resource('users', AdminUserController::class);
     });
 });

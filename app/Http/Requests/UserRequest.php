@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SourceRequest extends FormRequest
+class UserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize(): bool
+    public function authorize()
     {
         return auth()->check();
     }
@@ -24,14 +24,8 @@ class SourceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'url' => 'required',
-        ];
-    }
-
-    public function messages(): array
-    {
-        return [
-            'url.required' => 'URL обязателен для заполнения.',
+            'name' => 'required|min:5|max:200',
+            'email' => 'required|email:rfc',
         ];
     }
 }
