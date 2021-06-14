@@ -16,7 +16,7 @@ use App\Http\Controllers\Admin\SourceController as AdminSourceController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\FeedbackController as AdminFeedbackController;
 
-// e. Страница авторизации.
+// e. Страницы регистрации, авторизации и т.п.
 Auth::routes();
 
 // a. Страница приветствия.
@@ -63,7 +63,7 @@ Route::get('/categories/{id}/news', [CategoryController::class, 'show'])
 Route::group(['middleware' => 'auth'], function () {
     // Личный кабинет
     Route::group(['prefix' => 'account'], function () {
-        Route::get('/', AccountController::class)
+        Route::get('/', [AccountController::class, 'index'])
             ->name('account');
 
         Route::get('/logout', function () {

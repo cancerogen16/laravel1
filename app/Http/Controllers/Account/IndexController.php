@@ -3,15 +3,23 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
-use Request;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 
 class IndexController extends Controller
 {
-    public function __invoke(Request $request): string
+    /**
+     * @return Application|Factory|View
+     */
+    public function index()
     {
-        return 'Welcome, ' . \Auth::user()->name . '<br>
-            <a href="' . route('admin.index') . '">В админку</a><br>
-            <a href="' . route('account.logout') . '">Выход</a>';
+        $user = \Auth::user();
 
+        return view('account.index', [
+            'user' => $user,
+            'adminLink' => route('admin.index'),
+            'logoutLink' => route('account.logout'),
+        ]);
     }
 }
