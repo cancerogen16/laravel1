@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Contracts\ParserServiceContract;
+use App\Services\ParserService;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
@@ -28,5 +30,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Paginator::useBootstrap();
+
+        $this->app->bind(ParserServiceContract::class, ParserService::class);
     }
 }

@@ -20,6 +20,10 @@
                     <span data-feather="briefcase"></span>Источники данных</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link @if(request()->routeIs('parser.*')) active @endif" href="{{ route('parser') }}">
+                    <span data-feather="cast"></span>Парсер</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link @if(request()->routeIs('orders.*')) active @endif" href="{{ route('orders.index') }}">
                     <span data-feather="shopping-cart"></span>Заказы выгрузки данных</a>
             </li>

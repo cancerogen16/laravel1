@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 8.46.0.
+ * Generated for Laravel 8.47.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -1090,6 +1090,32 @@
                         $instance->singletonIf($abstract, $concrete);
         }
                     /**
+         * Register a scoped binding in the container.
+         *
+         * @param string $abstract
+         * @param \Closure|string|null $concrete
+         * @return void 
+         * @static 
+         */ 
+        public static function scoped($abstract, $concrete = null)
+        {            //Method inherited from \Illuminate\Container\Container         
+                        /** @var \Illuminate\Foundation\Application $instance */
+                        $instance->scoped($abstract, $concrete);
+        }
+                    /**
+         * Register a scoped binding if it hasn't already been registered.
+         *
+         * @param string $abstract
+         * @param \Closure|string|null $concrete
+         * @return void 
+         * @static 
+         */ 
+        public static function scopedIf($abstract, $concrete = null)
+        {            //Method inherited from \Illuminate\Container\Container         
+                        /** @var \Illuminate\Foundation\Application $instance */
+                        $instance->scopedIf($abstract, $concrete);
+        }
+                    /**
          * "Extend" an abstract type in the container.
          *
          * @param string $abstract
@@ -1360,6 +1386,17 @@
         {            //Method inherited from \Illuminate\Container\Container         
                         /** @var \Illuminate\Foundation\Application $instance */
                         $instance->forgetInstances();
+        }
+                    /**
+         * Clear all of the scoped instances from the container.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function forgetScopedInstances()
+        {            //Method inherited from \Illuminate\Container\Container         
+                        /** @var \Illuminate\Foundation\Application $instance */
+                        $instance->forgetScopedInstances();
         }
                     /**
          * Get the globally available instance of the container.
@@ -4915,6 +4952,18 @@
         {            //Method inherited from \Illuminate\Database\Connection         
                         /** @var \Illuminate\Database\MySqlConnection $instance */
                         $instance->recordsHaveBeenModified($value);
+        }
+                    /**
+         * Set the record modification state.
+         *
+         * @param bool $value
+         * @return \Illuminate\Database\MySqlConnection 
+         * @static 
+         */ 
+        public static function setRecordModificationState($value)
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Illuminate\Database\MySqlConnection $instance */
+                        return $instance->setRecordModificationState($value);
         }
                     /**
          * Reset the record modification state.
@@ -15329,7 +15378,78 @@
      
 }
 
-        namespace Barryvdh\Debugbar { 
+        namespace Orchestra\Parser\Xml { 
+            /**
+     * 
+     *
+     * @see \Orchestra\Parser\Xml\Reader
+     */ 
+        class Facade {
+                    /**
+         * Provides SimpleXMLElement to document.
+         *
+         * @return \Laravie\Parser\Document 
+         * @static 
+         */ 
+        public static function via($xml)
+        {
+                        /** @var \Orchestra\Parser\Xml\Reader $instance */
+                        return $instance->via($xml);
+        }
+                    /**
+         * Extract content from string.
+         *
+         * @param string $content
+         * @return \Laravie\Parser\Document 
+         * @static 
+         */ 
+        public static function extract($content)
+        {            //Method inherited from \Laravie\Parser\Xml\Reader         
+                        /** @var \Orchestra\Parser\Xml\Reader $instance */
+                        return $instance->extract($content);
+        }
+                    /**
+         * Load content from file.
+         *
+         * @param string $filename
+         * @return \Laravie\Parser\Document 
+         * @static 
+         */ 
+        public static function load($filename)
+        {            //Method inherited from \Laravie\Parser\Xml\Reader         
+                        /** @var \Orchestra\Parser\Xml\Reader $instance */
+                        return $instance->load($filename);
+        }
+                    /**
+         * Load content from local file.
+         *
+         * @param string $filename
+         * @return \Laravie\Parser\Document 
+         * @static 
+         */ 
+        public static function local($filename)
+        {            //Method inherited from \Laravie\Parser\Xml\Reader         
+                        /** @var \Orchestra\Parser\Xml\Reader $instance */
+                        return $instance->local($filename);
+        }
+                    /**
+         * Load content from remote file.
+         *
+         * @param string $filename
+         * @return \Laravie\Parser\Document 
+         * @static 
+         */ 
+        public static function remote($filename)
+        {            //Method inherited from \Laravie\Parser\Xml\Reader         
+                        /** @var \Orchestra\Parser\Xml\Reader $instance */
+                        return $instance->remote($filename);
+        }
+         
+    }
+     
+}
+
+    namespace Barryvdh\Debugbar { 
             /**
      * 
      *
@@ -19521,6 +19641,7 @@ namespace  {
             class Storage extends \Illuminate\Support\Facades\Storage {}
             class Str extends \Illuminate\Support\Str {}
             class URL extends \Illuminate\Support\Facades\URL {}
+            class XmlParser extends \Orchestra\Parser\Xml\Facade {}
             class Validator extends \Illuminate\Support\Facades\Validator {}
             class View extends \Illuminate\Support\Facades\View {}
             class Debugbar extends \Barryvdh\Debugbar\Facade {}

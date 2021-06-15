@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Account\IndexController as AccountController;
+use App\Http\Controllers\Admin\ParserController;
 use App\Http\Controllers\Common\SuccessController;
 
 use App\Http\Controllers\Admin\MainController;
@@ -95,5 +96,8 @@ Route::group(['middleware' => 'auth'], function () {
 
         // Редактирование профилей пользователей в админке
         Route::resource('users', AdminUserController::class);
+
+        Route::get('/parser', [ParserController::class, 'index'])
+            ->name('parser');
     });
 });
