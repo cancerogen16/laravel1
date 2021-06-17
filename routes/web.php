@@ -10,6 +10,7 @@ use App\Http\Controllers\NewsController;
 
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\SocialController;
 
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
@@ -100,4 +101,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/parser', [ParserController::class, 'index'])
             ->name('parser');
     });
+});
+
+Route::group(['middleware' => 'guest'], function() {
+    Route::get('/login/{provider?}', [SocialController::class, 'login'])
+        ->name('social.login');
+    Route::get('/callback/{provider?}', [SocialController::class, 'callback'])
+        ->name('social.callback');
 });
