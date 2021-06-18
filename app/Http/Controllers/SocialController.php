@@ -6,7 +6,10 @@ use App\Services\SocialService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
-use Laravel\Socialite\Facades\Socialite;
+use App\Models\User as UserModel;
+use Socialite;
+use Exception;
+use Auth;
 
 class SocialController extends Controller
 {
@@ -26,15 +29,36 @@ class SocialController extends Controller
      */
     public function callback(string $provider, SocialService $service)
     {
-        $user = Socialite::driver($provider)->user();
+        try {
+            $user = Socialite::driver($provider)->user();
 
-        if ($user) {
+            $userData = UserModel::where('email', $user->getEmail())->first();
+
+            if ($provider == 'facebook') {
+                if (!$userData) {
+                    UserModel::create([
+                        'name' => $user->name,
+                        'email' => $user->email,
+                        'facebook_id' => $user->id,
+                        'password' => encrypt('admin@123')
+                    ]);
+                }
+            } else {
+                if (!$userData) {
+                    UserModel::create([
+                        'name' => $user->name,
+                        'email' => $user->email,
+                        'password' => encrypt('admin@123')
+                    ]);
+                }
+            }
+
             return redirect(
-                $service->login(
-                    $user
-                ));
-        } else {
-            return redirect(route('login'));
+                $service->login($user)
+            );
+
+        } catch (Exception $exception) {
+            dd($exception->getMessage());
         }
     }
 }

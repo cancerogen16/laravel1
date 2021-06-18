@@ -4,10 +4,14 @@ namespace App\Services;
 
 use App\Models\User as UserModel;
 use App\Contracts\SocialServiceContract;
-use SocialiteProviders\Manager\OAuth2\User;
+use Laravel\Socialite\Contracts\User;
 
 class SocialService implements SocialServiceContract
 {
+    /**
+     * @param User $user
+     * @return string
+     */
     public function login(User $user): string
     {
         $userData = UserModel::where('email', $user->getEmail())->first();
@@ -22,7 +26,7 @@ class SocialService implements SocialServiceContract
 
             return route('account');
         } else {
-            return route('register');
+            return route('login');
         }
     }
 }

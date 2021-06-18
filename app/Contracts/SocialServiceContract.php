@@ -2,7 +2,7 @@
 
 namespace App\Contracts;
 
-use SocialiteProviders\Manager\OAuth2\User;
+use Laravel\Socialite\Contracts\User;
 
 interface SocialServiceContract
 {

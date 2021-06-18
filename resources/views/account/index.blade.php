@@ -19,6 +19,12 @@
                         <div class="card-body">
                             <h3>Данные пользователя</h3>
                             <ul class="list-group">
+                                <li class="list-group-item">
+                                    @if($user->avatar)
+                                        <br>
+                                        Ваш аватар: <img src="{{ $user->avatar }}" style="width: 200px">
+                                    @endif
+                                </li>
                                 <li class="list-group-item"><b>ID:</b> {{ $user->id }}</li>
                                 <li class="list-group-item"><b>Имя:</b> {{ $user->name }}</li>
                                 <li class="list-group-item"><b>Email:</b> {{ $user->email }}</li>
