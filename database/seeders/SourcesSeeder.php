@@ -20,10 +20,11 @@ class SourcesSeeder extends Seeder
         $faker = Factory::create('ru_RU');
         $fakerEn = Factory::create('en_GB');
 
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 5; $i++) {
             $createdAt = $faker->dateTimeBetween('-2 months', '-2 days');
 
             $sources[] = [
+                'name' => $faker->realText(rand(10, 20)),
                 'url' => $fakerEn->domainName,
                 'description' => $faker->realText(rand(50, 200)),
                 'created_at' => $createdAt,

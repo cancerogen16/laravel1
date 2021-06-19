@@ -17,6 +17,7 @@
             <thead>
             <tr>
                 <th>#ID</th>
+                <th>Название</th>
                 <th>URL</th>
                 <th>Дата добавления</th>
                 <th>Действия</th>
@@ -26,6 +27,7 @@
             @forelse($sources as $source)
                 <tr>
                     <td>{{ $source->id }}</td>
+                    <td>{{ $source->name }}</td>
                     <td>{{ $source->url }}</td>
                     <td>{{ $source->created_at->format('d-m-Y H:i') }}</td>
                     <td>
@@ -44,6 +46,15 @@
         </table>
         <div>{{ $sources->links() }}</div>
     </div>
+    @if ($sources)
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2">
+                <a class="btn btn-primary" href="{{ route('parser') }}" role="button">Парсинг</a>
+            </div>
+        </div>
+    </div>
+    @endif
 @endsection
 
 
