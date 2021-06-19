@@ -7,75 +7,93 @@ use App\Models\Category;
 use App\Models\News;
 use App\Models\Source;
 use Str;
+use Throwable;
 
 class ParserService implements ParserServiceContract
 {
-    public function parseNews(): void
+    /**
+     * @return int
+     */
+    public function parseNews(): int
     {
+        $errors = 0;
+
         $sources = Source::all();
 
         foreach ($sources as $source) {
             $channel = $this->getSourceInfo($source->url);
 
-            $categoryName = $channel['title'];
+            if ($channel) {
+                $categoryName = $channel['title'];
 
-            // Проверяем, если категория уже существует в базе данных
-            $category = Category::query()->where('title', $categoryName)->first();
-            // Если нет, то сохраняем
-            if (!$category) {
-                $fields = [
-                    'title' => $categoryName,
-                    'slug' => $this->createSlug($categoryName),
-                    'description' => $channel['description'],
-                ];
-
-                $category = Category::create($fields);
-            }
-
-            foreach ($channel['news'] as $news) {
-                // Проверяем, если новость уже существует в базе данных
-                $post = News::query()->where('title', $news['title'])->first();
+                // Проверяем, если категория уже существует в базе данных
+                $category = Category::query()->where('title', $categoryName)->first();
                 // Если нет, то сохраняем
-                if (!$post) {
+                if (!$category) {
                     $fields = [
-                        'category_id' => $category->id,
-                        'title' => $news['title'],
-                        'slug' => $this->createSlug($news['title']),
-                        'description' => $news['description'],
-                        'status' => 'published',
+                        'title' => $categoryName,
+                        'slug' => $this->createSlug($categoryName),
+                        'description' => $channel['description'],
                     ];
 
-                    News::create($fields);
+                    $category = Category::create($fields);
                 }
+
+                foreach ($channel['news'] as $news) {
+                    // Проверяем, если новость уже существует в базе данных
+                    $post = News::query()->where('title', $news['title'])->first();
+                    // Если нет, то сохраняем
+                    if (!$post) {
+                        $fields = [
+                            'category_id' => $category->id,
+                            'title' => $news['title'],
+                            'slug' => $this->createSlug($news['title']),
+                            'description' => $news['description'],
+                            'status' => 'published',
+                        ];
+
+                        News::create($fields);
+                    }
+                }
+            } else {
+                $errors++;
             }
         }
+
+        return $errors;
     }
 
     /**
      * @param string $url
-     * @return array
+     * @return array|bool
      */
-    public function getSourceInfo(string $url): array
+    public function getSourceInfo(string $url)
     {
-        $xml = \XmlParser::load($url);
+        try {
+            $xml = \XmlParser::load($url);
 
-        return $xml->parse([
-            'title' => [
-                'uses' => 'channel.title'
-            ],
-            'link' => [
-                'uses' => 'channel.link'
-            ],
-            'description' => [
-                'uses' => 'channel.description'
-            ],
-            'image' => [
-                'uses' => 'channel.image.url'
-            ],
-            'news' => [
-                'uses' => 'channel.item[title,link,guid,description,pubDate]'
-            ],
-        ]);
+            return $xml->parse([
+                'title' => [
+                    'uses' => 'channel.title'
+                ],
+                'link' => [
+                    'uses' => 'channel.link'
+                ],
+                'description' => [
+                    'uses' => 'channel.description'
+                ],
+                'image' => [
+                    'uses' => 'channel.image.url'
+                ],
+                'news' => [
+                    'uses' => 'channel.item[title,link,guid,description,pubDate]'
+                ],
+            ]);
+        } catch (Throwable $e) {
+            $xml = null;
+
+            return false;
+        }
     }
 
     /**

@@ -11,7 +11,7 @@ interface ParserServiceContract
 
     /**
      * @param string $url
-     * @return array
+     * @return array|bool
      */
-    public function getSourceInfo(string $url): array;
+    public function getSourceInfo(string $url);
 }

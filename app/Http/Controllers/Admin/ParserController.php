@@ -13,10 +13,16 @@ class ParserController extends AdminBaseController
      */
     public function parse(ParserService $service): RedirectResponse
     {
-        $service->parseNews();
+        $errors = $service->parseNews();
 
-        return redirect()
-            ->route('sources.index')
-            ->with(['success' => 'Парсинг успешно закончен!']);
+        if ($errors) {
+            return redirect()
+                ->route('sources.index')
+                ->with(['success' => 'Парсинг закончен. Есть ' . $errors. ' ошибок!']);
+        } else {
+            return redirect()
+                ->route('sources.index')
+                ->with(['success' => 'Парсинг успешно закончен!']);
+        }
     }
 }
