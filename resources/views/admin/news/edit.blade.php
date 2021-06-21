@@ -8,7 +8,7 @@
 
         <div class="mb-2">
             @include('common.result')
-            <form class="row g-3" method="post" action="{{ route('news.update', $newsInfo->id) }}">
+            <form class="row g-3" method="post" action="{{ route('news.update', $newsInfo->id) }}" enctype="multipart/form-data">
                 @method('PATCH')
                 @csrf
                 <div class="form-group">

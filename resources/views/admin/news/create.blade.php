@@ -8,7 +8,7 @@
 
         <div class="mb-2">
             @include('common.result')
-            <form class="row g-3" method="post" action="{{ route('news.store') }}">
+            <form class="row g-3" method="post" action="{{ route('news.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <label for="title" class="form-label">Заголовок *</label>

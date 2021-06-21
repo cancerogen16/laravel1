@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Contracts\ParserServiceContract;
 use App\Contracts\SocialServiceContract;
+use App\Services\FileUploadService;
 use App\Services\ParserService;
 use App\Services\SocialService;
 use Illuminate\Pagination\Paginator;
@@ -35,5 +36,7 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(ParserServiceContract::class, ParserService::class);
         $this->app->bind(SocialServiceContract::class, SocialService::class);
+
+        $this->app->bind(FileUploadService::class, FileUploadService::class);
     }
 }

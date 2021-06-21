@@ -7,6 +7,7 @@ use App\Http\Requests\NewsUpdateRequest;
 use App\Models\News;
 use App\Models\Category;
 use App\Models\Status;
+use App\Services\FileUploadService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -51,12 +52,15 @@ class NewsController extends AdminBaseController
     /**
      * @param NewsCreateRequest $request
      * @return RedirectResponse
+     * @throws \Exception
      */
-    public function store(NewsCreateRequest $request): RedirectResponse
+    public function store(NewsCreateRequest $request, FileUploadService $uploadedService): RedirectResponse
     {
         $fields = $request->validated();
 
         $fields['slug'] = $this->createSlug($fields['title']);
+
+        $fields['image'] = $uploadedService->upload($request);
 
         $newsInfo = News::create($fields);
 
@@ -122,9 +126,11 @@ class NewsController extends AdminBaseController
      *
      * @param NewsUpdateRequest $request
      * @param int $id
+     * @param FileUploadService $uploadedService
      * @return RedirectResponse
+     * @throws \Exception
      */
-    public function update(NewsUpdateRequest $request, int $id): RedirectResponse
+    public function update(NewsUpdateRequest $request, int $id, FileUploadService $uploadedService): RedirectResponse
     {
         $news = News::find($id);
 
@@ -134,13 +140,15 @@ class NewsController extends AdminBaseController
                 ->withInput();
         }
 
-        $data = $request->input();
+        $fields = $request->input();
 
-        if (empty($data['slug'])) {
-            $data['slug'] = Str::slug($data['title']);
+        if (empty($fields['slug'])) {
+            $fields['slug'] = Str::slug($fields['title']);
         }
 
-        $result = $news->update($data);
+        $fields['image'] = $uploadedService->upload($request);
+
+        $result = $news->update($fields);
 
         if ($result) {
             return redirect()

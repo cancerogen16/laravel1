@@ -20,7 +20,7 @@
                     <div class="card-img-top">
                         <div class="card-img">
                         @if($post->image)
-                            <img src="{{ $post->image }}" alt="{{ $post->title }}">
+                            <img src="{{ Storage::disk('public')->url($post->image) }}" alt="{{ $post->title }}">
                         @else
                         <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
                              xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
