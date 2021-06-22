@@ -23,6 +23,9 @@
                     <input type="text" class="form-control" id="slug" name="slug" placeholder="Ярлык" value="{{ $newsInfo->slug }}">
                 </div>
                 <div class="form-group">
+                    @if ($newsInfo->image)
+                        <img src="{{ Storage::disk('public')->url($newsInfo->image) }}" alt="{{ $newsInfo->title }}" width="200">
+                    @endif
                     <label for="image" class="form-label">Логотип</label>
                     <input type="file" class="form-control" id="image" name="image">
                 </div>
@@ -67,6 +70,11 @@
             </form>
         </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+            CKEDITOR.replace('description', options);
+        });
+    </script>
 @endsection
 
 

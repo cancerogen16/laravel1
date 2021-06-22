@@ -146,7 +146,11 @@ class NewsController extends AdminBaseController
             $fields['slug'] = Str::slug($fields['title']);
         }
 
-        $fields['image'] = $uploadedService->upload($request);
+        $image = $uploadedService->upload($request);
+
+        if ($image) {
+            $fields['image'] = $image;
+        }
 
         $result = $news->update($fields);
 

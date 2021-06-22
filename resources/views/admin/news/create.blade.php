@@ -61,6 +61,11 @@
             </form>
         </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+            CKEDITOR.replace('description', options);
+        });
+    </script>
 @endsection
 
 

@@ -29,7 +29,7 @@ class FileUploadService
                 throw new \Exception('File upload error');
             }
         } else {
-            throw new \Exception('File upload error');
+            return '';
         }
     }
 }

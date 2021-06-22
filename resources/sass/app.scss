@@ -1,6 +1,10 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+img {
+    max-width: 100%;
+}
+
 .bd-placeholder-img {
     font-size: 1.125rem;
     text-anchor: middle;

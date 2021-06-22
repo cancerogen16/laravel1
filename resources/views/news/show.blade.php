@@ -40,7 +40,7 @@
                             <div class="d-flex justify-content-between">
                                 <small class="text-muted">{{ $news->created_at->format('d.m.Y H:i') }}</small>
                             </div>
-                            <p class="card-text">{{ $news->description }}</p>
+                            <div class="card-text">{!! $news->description !!}</div>
                         </div>
                     </div>
                 </div>
