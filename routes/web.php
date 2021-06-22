@@ -109,3 +109,7 @@ Route::group(['middleware' => 'guest'], function() {
     Route::get('/callback/{provider?}', [SocialController::class, 'callback'])
         ->name('social.callback');
 });
+
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});
