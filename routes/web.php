@@ -98,8 +98,11 @@ Route::group(['middleware' => 'auth'], function () {
         // Редактирование профилей пользователей в админке
         Route::resource('users', AdminUserController::class);
 
-        Route::get('/parser', [ParserController::class, 'parse'])
+        Route::get('/parser', [ParserController::class, 'index'])
             ->name('parser');
+
+        Route::get('/parsing', [ParserController::class, 'parsing'])
+            ->name('parsing');
     });
 });
 

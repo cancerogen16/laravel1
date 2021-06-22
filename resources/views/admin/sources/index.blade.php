@@ -50,7 +50,7 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
-                <a class="btn btn-primary" href="{{ route('parser') }}" role="button">Парсинг</a>
+                <a class="btn btn-primary" href="{{ route('parsing') }}" role="button">Парсинг</a>
             </div>
         </div>
     </div>
